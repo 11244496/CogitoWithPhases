@@ -15,7 +15,6 @@ public class Reply {
     private String message;
     private User sender;
     private String dateSent;
-    
     private Testimonial testimonial;
 
     public Reply() {
