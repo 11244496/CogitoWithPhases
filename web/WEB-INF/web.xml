@@ -271,7 +271,7 @@
     <servlet>
         <servlet-name>AJAX_Citizen_SearchTestimonialViaMap</servlet-name>
         <servlet-class>Servlet.AjaxServlet.AJAX_Citizen_SearchTestimonialViaMap</servlet-class>
-    </servlet>    
+    </servlet>
     <servlet>
         <servlet-name>GS_ViewProjectList</servlet-name>
         <servlet-class>Servlet.GS_ViewProjectList</servlet-class>
@@ -296,7 +296,10 @@
         <servlet-name>OCPD_CompileProposals</servlet-name>
         <servlet-class>Servlet.OCPD_CompileProposals</servlet-class>
     </servlet>
-    
+    <servlet>
+        <servlet-name>CityAdmin_ApproveTestimonial</servlet-name>
+        <servlet-class>Servlet.CityAdmin_ApproveTestimonial</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -568,7 +571,7 @@
     <servlet-mapping>
         <servlet-name>AJAX_Citizen_SearchTestimonialViaMap</servlet-name>
         <url-pattern>/AJAX_Citizen_SearchTestimonialViaMap</url-pattern>
-    </servlet-mapping>    
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GS_ViewProjectList</servlet-name>
         <url-pattern>/GS_ViewProjectList</url-pattern>
@@ -592,6 +595,10 @@
     <servlet-mapping>
         <servlet-name>OCPD_CompileProposals</servlet-name>
         <url-pattern>/OCPD_CompileProposals</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CityAdmin_ApproveTestimonial</servlet-name>
+        <url-pattern>/CityAdmin_ApproveTestimonial</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
