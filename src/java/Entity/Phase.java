@@ -5,6 +5,8 @@
  */
 package Entity;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author AdrianKyle
@@ -15,15 +17,17 @@ public class Phase {
     private int phaseNumber;
     private String description;
     private Project project;
+    private ArrayList<PWorks> pWorks;
 
     public Phase() {
     }
 
-    public Phase(int id, int phaseNumber, String description, Project project) {
+    public Phase(int id, int phaseNumber, String description, Project project, ArrayList<PWorks> pWorks) {
         this.id = id;
         this.phaseNumber = phaseNumber;
         this.description = description;
         this.project = project;
+        this.pWorks = pWorks;
     }
 
     public int getId() {
@@ -57,6 +61,15 @@ public class Phase {
     public void setProject(Project project) {
         this.project = project;
     }
+
+    public ArrayList<PWorks> getpWorks() {
+        return pWorks;
+    }
+
+    public void setpWorks(ArrayList<PWorks> pWorks) {
+        this.pWorks = pWorks;
+    }
+    
     
     
 }

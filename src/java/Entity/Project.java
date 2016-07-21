@@ -27,7 +27,7 @@ public class Project {
 
     private ArrayList<Location> location;
     private ArrayList<Files> files;
-    private ArrayList<PWorks> pWorks;
+    private ArrayList<Phase> phase;
     private Annotation annotation;
     private ArrayList<PComments> pComments;
     private ArrayList<Project> referredProjects;
@@ -47,7 +47,7 @@ public class Project {
         this.id = id;
     }
 
-    public Project(String id, String name, String description, String type, String status, String foldername, Employee employee, String datesubmitted, float budget, String category, ArrayList<Location> location, ArrayList<Files> files, ArrayList<PWorks> pWorks, Annotation annotation, ArrayList<PComments> pComments, ArrayList<Project> referredProjects, ArrayList<Feedback> feedback, ArrayList<Project_Inspection> inspection, Contractor contractor, Contractor_User contractorUser) {
+    public Project(String id, String name, String description, String type, String status, String foldername, Employee employee, String datesubmitted, float budget, String category, ArrayList<Location> location, ArrayList<Files> files, ArrayList<Phase> phase, Annotation annotation, ArrayList<PComments> pComments, ArrayList<Project> referredProjects, ArrayList<Feedback> feedback, ArrayList<Project_Inspection> inspection, Contractor contractor, Contractor_User contractorUser) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -60,7 +60,7 @@ public class Project {
         this.category = category;
         this.location = location;
         this.files = files;
-        this.pWorks = pWorks;
+        this.phase = phase;
         this.annotation = annotation;
         this.pComments = pComments;
         this.referredProjects = referredProjects;
@@ -70,7 +70,7 @@ public class Project {
         this.contractorUser = contractorUser;
     }
 
-    public Project(String id, String name, String description, String type, String status, String foldername, Employee employee, String datesubmitted, float budget, String category, ArrayList<Location> location, ArrayList<Files> files, ArrayList<PWorks> pWorks, Annotation annotation, ArrayList<PComments> pComments, ArrayList<Project> referredProjects, ArrayList<Feedback> feedback, ArrayList<Project_Inspection> inspection, Contractor_User contractorUser) {
+    public Project(String id, String name, String description, String type, String status, String foldername, Employee employee, String datesubmitted, float budget, String category, ArrayList<Location> location, ArrayList<Files> files, ArrayList<Phase> phase, Annotation annotation, ArrayList<PComments> pComments, ArrayList<Project> referredProjects, ArrayList<Feedback> feedback, ArrayList<Project_Inspection> inspection, Contractor_User contractorUser) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -83,7 +83,7 @@ public class Project {
         this.category = category;
         this.location = location;
         this.files = files;
-        this.pWorks = pWorks;
+        this.phase = phase;
         this.annotation = annotation;
         this.pComments = pComments;
         this.referredProjects = referredProjects;
@@ -262,18 +262,12 @@ public class Project {
         this.files = files;
     }
 
-    /**
-     * @return the pWorks
-     */
-    public ArrayList<PWorks> getpWorks() {
-        return pWorks;
+    public ArrayList<Phase> getPhase() {
+        return phase;
     }
 
-    /**
-     * @param pWorks the pWorks to set
-     */
-    public void setpWorks(ArrayList<PWorks> pWorks) {
-        this.pWorks = pWorks;
+    public void setPhase(ArrayList<Phase> phase) {
+        this.phase = phase;
     }
 
     public Annotation getAnnotation() {
