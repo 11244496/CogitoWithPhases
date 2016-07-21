@@ -206,12 +206,52 @@ function removeMarker() {
     allPosition = [];
 }
 
-var powNumber = 1;
+$('#phasesNo').change(function () {
+    //create worksListDiv per phase
+    var existing = 0;
+    var phaseNo = parseInt($('#phasesNo').val());
+    for (var i = 0; i < phaseNo; i++) {
+        var button = $('<button class="btn btn-white" id="phase-' + i + '" type="button" onclick=showWorks(this)> Phase ' + (i + 1) + ' </button>');
 
-function addRowForWorks() {
+        $('#phaseButtonsDiv').append(button);
+        createDiv(i);
+        addRowForWorks(i);
+        existing = i;
+    }
+});
+
+function createDiv(i) {
+    var listDiv = $('<div id="allWorks-' + i + '"></div>');
+    var header = $('<header class="panel-heading no-border">Works</header>');
+    var table = $('<table class="table table-bordered table-striped table-condensed" id="powTable-' + i + '"><tr><th>Works</th><th style="width: 20px"></th></tr></thead><tbody></tbody></table>');
+    var button = $('<button class="btn btn-success btn-sm pull-right" style="margin-right: 5px" onclick="addRowForWorks('+i+')" type="button"><i class="fa fa-plus"></i> Add </button>');
+    listDiv.append(header);
+    listDiv.append(table);
+    listDiv.append(button);
+    listDiv.css("display", "none");
+    $('#workList').append(listDiv);
+
+    //worksDiv > workList > allWorks-0 > powTable-0
+}
+//each should have div under worksDiv that will hold list and table
+//table
+function showWorks(btn) {
+    var num = getIdNum(btn.id);
+
+    $('#worksDiv #workList div').each(function () {
+        $(this).hide();
+        $('#compMain div').hide();
+    });
+    $('#allWorks-' + num).show();
+    $('#componentsDiv-' + num).show();
+
+}
+
+
+function addRowForWorks(powNumber) {
     //debugger;
 
-    var table = document.getElementById("powTable");
+    var table = document.getElementById("powTable-" + powNumber);
     var row = table.insertRow(-1);
     var cell2 = row.insertCell(-1);
     var cell3 = row.insertCell(-1);
@@ -391,7 +431,7 @@ function onchanges(quantity, unitcost, amount, id) {
             cost = parseFloat($(quantity).val() * $(unitcost).val());
             $(amount).val(cost.toFixed(2));
             var total = 0;
-            
+
             $('#comp-' + id + ' .amount').each(function () {
                 total = total + parseFloat($(this).val());
             });
