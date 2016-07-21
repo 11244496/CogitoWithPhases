@@ -227,9 +227,6 @@
                                                 <div>Schedule</div>
                                             </li>
 
-                                            <li id="default-title-5" class="">
-                                                <div>Overview</div>
-                                            </li>
 
                                         </ul>
                                     </div>
@@ -449,6 +446,14 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
+                                                <label class="col-lg-2 control-label">No. of Phases</label>
+                                                <div class="col-lg-10">
+                                                    <input type="text" class="form-control" name="phases" id="phasesNo" value="" placeholder="Enter number of phases">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
                                                 <label class="col-lg-2 control-label">Location</label>
                                                 <div class="col-lg-10">
                                                     <!--Map should be here -->
@@ -464,29 +469,15 @@
                                             <legend></legend>
 
                                             <div class="col-md-12">
-                                                <div class="col-md-3">
-                                                    <header class="panel-heading no-border">
-                                                        Works
-                                                    </header>
-
-                                                    <table class="table table-bordered table-striped table-condensed" id="powTable">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Works</th>
-                                                                <th style="width: 20px"></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        </tbody> 
-                                                    </table>
-
-                                                    <button class="btn btn-success btn-sm pull-right" style="margin-right: 5px" onclick="addRowForWorks()" type="button"><i class="fa fa-plus"></i> Add </button>
-
+                                                <center>
+                                                    <div id="phaseButtonsDiv"></div>
+                                                </center>
+                                            </div>
+                                            <p></p><br><br>
+                                            <div class="col-md-12" id="worksDiv">
+                                                <div class="col-md-3" id="workList">
                                                 </div>
-
-
                                                 <div class="col-md-9" id="compMain">
-
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -537,9 +528,7 @@
                                             </div>
                                         </fieldset>
 
-                                        <fieldset title="Overview" class="step" id="default-step-5" >
-                                            <legend></legend>
-                                        </fieldset>
+
 
                                         <input type="hidden" name="hiddenlocation" id="location" value="">
                                         <input type="hidden" name="actionI" id="actionI">
