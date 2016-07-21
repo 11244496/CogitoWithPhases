@@ -78,6 +78,7 @@ $('.viewbutton').click(function () {
 });
 
 var mainTestimonial = [];
+var referencedTestimonial = [];
 var detachedMainRow;
 var tablerow;
 var Testimonialmarkers = [];
@@ -126,6 +127,36 @@ $('.deselectmainbtn').click(function () {
     document.getElementById("location").value = allPosition;
     initMap();
 
+});
+
+$(document).on('click', '.selectreferencebtn', function () {
+
+    $("#ReferenceTestimonialList").show();
+
+    var Rtestimonial = {id: $(this).val()};
+    referencedTestimonial.push(Rtestimonial);
+    var Rt = $(this).closest('tr').detach();
+    $("#RTestimonialTableBody").append(Rt);
+    $(this).removeClass('btn btn-warning btn-sm selectreferencebtn').addClass('btn btn-danger btn-sm unselectreferencebtn');
+    $(this).text("Remove");
+});
+
+//Transfer from Referenced Table back to Testi list
+$(document).on('click', '.unselectreferencebtn', function () {
+    for (var x = 0; x < referencedTestimonial.length; x++) {
+        if (referencedTestimonial[x].id == $(this).val()) {
+            referencedTestimonial.splice(x, 1);
+        }
+    }
+
+    if (referencedTestimonial.length == 0) {
+        $("#ReferenceTestimonialList").hide();
+    }
+
+    var detached = $(this).closest('tr').detach();
+    $("#TestimonialTableBody").append(detached);
+    $(this).removeClass('btn btn-danger btn-sm unselectreferencebtn').addClass('btn btn-warning btn-sm selectreferencebtn');
+    $(this).text("Use as reference");
 });
 
 $.fn.searchableTable = function () {
@@ -208,15 +239,12 @@ function removeMarker() {
 
 $('#phasesNo').change(function () {
     //create worksListDiv per phase
-    var existing = 0;
     var phaseNo = parseInt($('#phasesNo').val());
     for (var i = 0; i < phaseNo; i++) {
         var button = $('<button class="btn btn-white" id="phase-' + i + '" type="button" onclick=showWorks(this)> Phase ' + (i + 1) + ' </button>');
-
         $('#phaseButtonsDiv').append(button);
         createDiv(i);
-        addRowForWorks(i);
-        existing = i;
+        addRowForWorks();
     }
 });
 
@@ -224,7 +252,7 @@ function createDiv(i) {
     var listDiv = $('<div id="allWorks-' + i + '"></div>');
     var header = $('<header class="panel-heading no-border">Works</header>');
     var table = $('<table class="table table-bordered table-striped table-condensed" id="powTable-' + i + '"><tr><th>Works</th><th style="width: 20px"></th></tr></thead><tbody></tbody></table>');
-    var button = $('<button class="btn btn-success btn-sm pull-right" style="margin-right: 5px" onclick="addRowForWorks('+i+')" type="button"><i class="fa fa-plus"></i> Add </button>');
+    var button = $('<button class="btn btn-success btn-sm pull-right" style="margin-right: 5px" onclick="addRowForWorks2(' + i + ')  " type="button"><i class="fa fa-plus"></i> Add </button>');
     listDiv.append(header);
     listDiv.append(table);
     listDiv.append(button);
@@ -233,24 +261,21 @@ function createDiv(i) {
 
     //worksDiv > workList > allWorks-0 > powTable-0
 }
-//each should have div under worksDiv that will hold list and table
-//table
+
 function showWorks(btn) {
     var num = getIdNum(btn.id);
-
     $('#worksDiv #workList div').each(function () {
         $(this).hide();
         $('#compMain div').hide();
     });
     $('#allWorks-' + num).show();
     $('#componentsDiv-' + num).show();
-
 }
 
+var powNumber = 0;
 
-function addRowForWorks(powNumber) {
+function addRowForWorks() {
     //debugger;
-
     var table = document.getElementById("powTable-" + powNumber);
     var row = table.insertRow(-1);
     var cell2 = row.insertCell(-1);
@@ -306,17 +331,74 @@ function addRowForWorks(powNumber) {
     powNumber++;
 }
 
+var val = 1;
+function addRowForWorks2(id) {
+    //debugger;
+    var table = document.getElementById("powTable-" + id);
+    var lastId = ('#powTable-' + id + ' ').id;
+    console.log(lastId);
+    var row = table.insertRow(-1);
+    var cell2 = row.insertCell(-1);
+    var cell3 = row.insertCell(-1);
+
+    var sel = document.createElement('select');
+    sel.setAttribute("id", "worksSelect-" + val);
+    sel.setAttribute("class", "worksSelect");
+    sel.setAttribute("class", "form-control");
+    sel.setAttribute("name", "works");
+    var ok = document.createElement('button');
+    sel.setAttribute("id", "worksOk-" + val);
+
+    var button = document.createElement('button');
+    button.setAttribute("id", "worksButton-" + val);
+    button.setAttribute("class", "form-control");
+    button.setAttribute("name", "works");
+    button.setAttribute("type", "button");
+
+    var delBtn = document.createElement('button');
+    delBtn.setAttribute("id", "worksDel-" + val);
+    delBtn.setAttribute("class", "btn btn-danger btn-sm");
+    delBtn.setAttribute("type", "button");
+    delBtn.innerHTML = "-";
+    delBtn.addEventListener("click", function () {
+        var row = delBtn.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+        $('#componentsDiv-' + (getIdNum(delBtn.id))).remove();
+    });
+
+    var option = document.createElement("option");
+    option.setAttribute('hidden', true);
+    option.text = 'Select Works';
+    sel.appendChild(option);
+
+    for (var i = 0; i < worksList.length; i++) {
+        option = document.createElement("option");
+        option.setAttribute("value", worksList[i].name);
+        option.text = worksList[i].name;
+        sel.appendChild(option);
+    }
+
+    option = document.createElement("option");
+    option.setAttribute("value", "new");
+    option.text = "New...";
+    sel.appendChild(option);
+
+    powTableFc(button, sel, val);
+
+    cell2.appendChild(sel);
+    cell2.appendChild(button);
+    cell3.appendChild(delBtn);
+    val++;
+}
 function createTble(works, id) {
     var div = $('<div id="componentsDiv-' + id + '"></div>');
     var header = $('<header class="panel-heading no-border"> Components - ' + works + '</header>');
     var table = $('<table class="table table-bordered table-striped table-condensed" id="comp-' + id + '"></table>');
-    var tableHeader = $('<thead><tr><th style="width: 20%">Component</th><th style="width: 10%">Qty/Area</th><th style="width: 12%">Unit</th><th style="width: 20%">Unit Cost</th><th style="width: 20%">Amount</th></tr></thead>');
+    var tableHeader = $('<thead><tr><th style="width: 20%">Component</th><th style="width: 10%">Qty/Area</th><th style="width: 12%">Unit</th><th style="width: 20%">Unit Cost</th><th style="width: 20%">Amount</th><th style="width: 2%"></th></tr></thead>');
     var tableBody = $('<tbody></tbody>');
-    var tableFoot = $('<tfoot><tr id="totalTR"><td colspan="3"></td><td style="font-weight: bold;">Subtotal</td><td style="font-weight: bold; border-bottom: 3px double;"> <input type="text" class="form-control" name="subtotal" id="subtotal-"' + id + ' readonly style="background: transparent"></td></tr></tfoot>');
-    var deleteBtn = $('<button class="btn btn-danger btn-sm pull-right" type="button" onclick="delBtn(this)" id="componentsDelete-' + id + '"><i class="fa fa-times"></i> Delete </button>');
+    var tableFoot = $('<tfoot><tr id="totalTR"><td colspan="3"></td><td style="font-weight: bold;">Subtotal</td><td style="font-weight: bold; border-bottom: 3px double;"> <input type="text" class="form-control" name="subtotal" id="subtotal-"' + id + ' readonly style="background: transparent"></td><td></td></tr></tfoot>');
     var addBtn = $('<button class="btn btn-success btn-sm pull-right" type="button" onclick="addComponentsRow(this)" id="componentsAdd-' + id + '" style="margin-right: 5px"><i class="fa fa-plus"></i> Add </button>');
     var brk = $('<br><br><br>');
-
 
     $('#compMain').append(div);
     $(div).append(header);
@@ -324,7 +406,6 @@ function createTble(works, id) {
     $(table).append(tableHeader);
     $(table).append(tableBody);
     $(table).append(tableFoot);
-    $(div).append(deleteBtn);
     $(div).append(addBtn);
     $(div).append(brk);
 }
@@ -333,13 +414,19 @@ function powTableFc(button, sel, num) {
     $(button).hide();
 
     $(sel).change(function () {
-        $(sel).hide();
-        $(button).text($(sel).val());
-        $(button).show();
-        $('#compMain div').each(function () {
-            $(this).hide();
-        });
-        createTble(button.innerHTML, num);
+        if ($(sel).val() === "New...") {
+            $(sel).hide();
+            var newW = $('<input class="form-control" id="newWorks">');
+        }
+        else {
+            $(sel).hide();
+            $(button).text($(sel).val());
+            $(button).show();
+            $('#compMain div').each(function () {
+                $(this).hide();
+            });
+            createTble(button.innerHTML, num);
+        }
     });
 
     $(button).dblclick(function () {
@@ -349,13 +436,9 @@ function powTableFc(button, sel, num) {
 
     $(button).click(function () {
         $('#compMain div').each(function () {
-            if (this.id === "componentsDiv-" + num) {
-                $('#componentsDiv-' + num).show();
-            }
-            else {
-                $(this).hide();
-            }
+            $(this).hide();
         });
+        $('#componentsDiv-' + num).show();
 
     });
 }
@@ -398,17 +481,21 @@ function addComponentsRow(btn) {
     var amount = $('<input readonly type="text" name="amount" class="form-control amount" style="background: white">');
     amounttd.append(amount);
 
+    var deltd = $('<td></td>');
+    var del = $('<button class="btn btn-danger btn-xs" onclick="delBtn(this)">  -  </button>');
+    deltd.append(del);
+
     $(row).append(componenttd);
     $(row).append(quantitytd);
     $(row).append(unittd);
     $(row).append(unitCosttd);
     $(row).append(amounttd);
+    $(row).append(del);
 
     onchanges(quantity, unitCost, amount, id);
     $("#" + tableId).append(row);
 
 }
-
 function onchanges(quantity, unitcost, amount, id) {
     var cost;
 
