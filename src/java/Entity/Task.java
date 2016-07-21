@@ -17,17 +17,21 @@ public class Task {
     private String name;
     private Project project;
     private ArrayList<Schedule> schedules;
+    private Phase phase;
+    private User user;
 
     public Task() {
     }
 
-    public Task(int id, String name, Project project, ArrayList<Schedule> schedules) {
+    public Task(int id, String name, Project project, ArrayList<Schedule> schedules, Phase phase, User user) {
         this.id = id;
         this.name = name;
         this.project = project;
         this.schedules = schedules;
+        this.phase = phase;
+        this.user = user;
     }
-
+    
     public int getId() {
         return id;
     }
@@ -58,6 +62,28 @@ public class Task {
 
     public void setSchedules(ArrayList<Schedule> schedules) {
         this.schedules = schedules;
+    }
+
+    public Phase getPhase(){
+        return phase;
+    }
+    
+    public void setPhase (Phase phase){
+        this.phase = phase;
+    }
+    
+    /**
+     * @return the user
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
 
 
