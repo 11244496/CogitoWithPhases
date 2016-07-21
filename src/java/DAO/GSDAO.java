@@ -425,29 +425,6 @@ public class GSDAO {
         return mainproject;
     }
 
-    public ArrayList<Project> getReferenceProjectOnTestimonial(int id) {
-        ArrayList<Project> referencedproject = new ArrayList<Project>();
-        try {
-            myFactory = ConnectionFactory.getInstance();
-            connection = myFactory.getConnection();
-            String referencedprojectQuery = ("select * from project_has_reference where Testimonial_ID = ?");
-            statement = connection.prepareStatement(referencedprojectQuery);
-            statement.setInt(1, id);
-            result = statement.executeQuery();
-            while (result.next()) {
-                Project p = new Project();
-                p.setId(result.getString("otherProject_ID"));
-                referencedproject.add(p);
-            }
-
-            statement.close();
-            connection.close();
-            return referencedproject;
-        } catch (SQLException ex) {
-            Logger.getLogger(DAO.GSDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return referencedproject;
-    }
 
     public void changeTestiStatus(Testimonial t) {
         try {
@@ -760,12 +737,14 @@ public class GSDAO {
     }
 
     //================================ALL CODES ON MEETINGS========================================================
+    
+    //FIX
     public ArrayList<Schedule> getAllMeetings(String status) {
         ArrayList<Schedule> meetingList = new ArrayList<Schedule>();
         try {
             myFactory = ConnectionFactory.getInstance();
             connection = myFactory.getConnection();
-            String getID = "select * from schedule where Event = ? and Status = ?";
+            String getID = "select * from Task join scheudle on task.id = schedule.Task_ID where task.Name = ? and schedule.Status = ?";
             statement = connection.prepareStatement(getID);
             statement.setString(1, "Meeting with OCPD");
             statement.setString(2, status);
@@ -790,6 +769,7 @@ public class GSDAO {
         return meetingList;
     }
 
+    //FIX
     public ArrayList<Task> getAgenda(Schedule s) {
         ArrayList<Task> tList = new ArrayList<>();
         Task t;
@@ -873,6 +853,7 @@ public class GSDAO {
         return PPCount;
     }
 
+    //FIX
     public void rescheduleMeeting(Schedule s) {
         try {
             myFactory = ConnectionFactory.getInstance();
@@ -891,6 +872,7 @@ public class GSDAO {
         }
     }
 
+    //FIX
     public void updateMeetingStatus(Schedule s, String status) {
         try {
             myFactory = ConnectionFactory.getInstance();

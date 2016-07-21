@@ -137,14 +137,13 @@ public class OCPDDAO {
                 p.setId(result.getString("project.ID"));
                 p.setName(result.getString("name"));
                 p.setDescription(result.getString("description"));
-                p.setType(result.getString("project.type"));
+                p.setType(result.getString("project.category"));
                 p.setStatus(result.getString("status"));
                 p.setFoldername(result.getString("FolderName"));
                 p.setDatesubmitted(result.getString("datesubmitted"));
                 e.setId(result.getInt("employee.id"));
                 u.setUsername(result.getString("username"));
                 p.setEmployee(e);
-                p.setCategory(result.getString("Category"));
                 p.setBudget(result.getFloat("budget"));
             }
         } catch (SQLException ex) {
@@ -187,14 +186,13 @@ public class OCPDDAO {
                 project.setId(result.getString("project.ID"));
                 project.setName(result.getString("name"));
                 project.setDescription(result.getString("description"));
-                project.setType(result.getString("project.type"));
+                project.setType(result.getString("project.category"));
                 project.setStatus(result.getString("status"));
                 project.setFoldername(result.getString("FolderName"));
                 project.setDatesubmitted(result.getString("datesubmitted"));
                 e.setId(result.getInt("employee.id"));
                 u.setUsername(result.getString("username"));
                 project.setEmployee(e);
-                project.setCategory(result.getString("Category"));
                 project.setBudget(result.getFloat("budget"));
                 Testimonial t = new Testimonial();
                 t.setId(result.getInt("Testimonial_ID"));
@@ -220,7 +218,6 @@ public class OCPDDAO {
                 p.setStatus(p.getStatus());
                 p.setFoldername(p.getFoldername());
                 p.setDatesubmitted(p.getDatesubmitted());
-                p.setCategory(p.getCategory());
                 p.setBudget(p.getBudget());
                 loc.setProject(p);
 
@@ -248,7 +245,6 @@ public class OCPDDAO {
                 p.setStatus(p.getStatus());
                 p.setFoldername(p.getFoldername());
                 p.setDatesubmitted(p.getDatesubmitted());
-                p.setCategory(p.getCategory());
                 p.setBudget(p.getBudget());
                 f.setProject(p);
                 f.setStatus(result.getString("status"));

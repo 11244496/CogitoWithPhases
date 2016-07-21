@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class Schedule {
 
     private int id;
-    private String startdate;
-    private String enddate;
+    private String startDate;
+    private String endDate;
     private String status;
     private String time;
     private String actualenddate;
@@ -27,8 +27,8 @@ public class Schedule {
 
     public Schedule(int id, String startdate, String enddate, String status, String time, String actualenddate, String remarks, Task task) {
         this.id = id;
-        this.startdate = startdate;
-        this.enddate = enddate;
+        this.startDate = startdate;
+        this.endDate = enddate;
         this.status = status;
         this.time = time;
         this.actualenddate = actualenddate;
@@ -53,28 +53,28 @@ public class Schedule {
      * @return the startdate
      */
     public String getStartdate() {
-        return startdate;
+        return startDate;
     }
 
     /**
      * @param startdate the startdate to set
      */
     public void setStartdate(String startdate) {
-        this.startdate = startdate;
+        this.startDate = startdate;
     }
 
     /**
      * @return the enddate
      */
     public String getEnddate() {
-        return enddate;
+        return endDate;
     }
 
     /**
      * @param enddate the enddate to set
      */
     public void setEnddate(String enddate) {
-        this.enddate = enddate;
+        this.endDate = enddate;
     }
 
     /**

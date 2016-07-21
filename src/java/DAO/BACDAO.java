@@ -164,7 +164,6 @@ public class BACDAO {
                 con = new Contractor();
                 con.setID(result.getInt("Company_ID"));
                 con.setName(result.getString("contractor.name"));
-                project.setContractor(con);
                 project.setId(result.getString("ID"));
                 project.setName(result.getString("Name"));
                 project.setDescription(result.getString("Description"));
@@ -182,16 +181,15 @@ public class BACDAO {
         return projects;
     }
 
-    public ArrayList<Project> getAllProjects(String status, Contractor contractor) {
+    public ArrayList<Project> getAllProjects(String status) {
         ArrayList<Project> projects = new ArrayList<Project>();
         Project project;
         try {
             myFactory = ConnectionFactory.getInstance();
             connection = myFactory.getConnection();
-            String query = "select * from project where Status = ? AND Contractor_ID = ?";
+            String query = "select * from project where Status = ?";
             statement = connection.prepareStatement(query);
             statement.setString(1, status);
-            statement.setInt(2, contractor.getID());
 
             result = statement.executeQuery();
 
@@ -203,7 +201,6 @@ public class BACDAO {
                 project.setDescription(result.getString("Description"));
                 project.setType(result.getString("Type"));
                 project.setStatus(result.getString("Status"));
-
                 projects.add(project);
 
             }
@@ -221,7 +218,7 @@ public class BACDAO {
         try {
             myFactory = ConnectionFactory.getInstance();
             connection = myFactory.getConnection();
-            String query = "select * from project where Contractor_ID = ?";
+            String query = "select * from project join phase on project.ID = phase.Project_ID where Contractor_ID = ?";
             statement = connection.prepareStatement(query);
 
             statement.setInt(1, contractor.getID());
@@ -654,14 +651,17 @@ public class BACDAO {
         try {
             myFactory = ConnectionFactory.getInstance();
             connection = myFactory.getConnection();
-            String query = "UPDATE project SET Status = 'Implementation', Contractor_ID = ? WHERE ID = ?";
+            String query = "UPDATE project SET Status = 'Implementation' WHERE ID = ?";
             statement = connection.prepareStatement(query);
-            statement.setInt(1, con.getID());
-            statement.setString(2, id);
-
+            statement.setString(1, id);
             statement.executeUpdate();
             statement.close();
-
+            
+            String otherquery = "UPDATE phase Contractor_ID = ? WHERE Project_ID = ?";
+            PreparedStatement s = connection.prepareStatement(otherquery);
+            s.setInt(1, con.getID());
+            s.executeUpdate();
+            s.close();
             connection.close();
 
         } catch (SQLException ex) {

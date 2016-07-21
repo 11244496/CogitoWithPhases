@@ -98,7 +98,7 @@ public class ContractorDAO {
         try {
             myFactory = ConnectionFactory.getInstance();
             connection = myFactory.getConnection();
-            String query = "select * from project where Contractor_ID = ? AND Status = 'Implementation'";
+            String query = "select * from project join phase on project.ID = phase.Project_ID where phase.Contractor_ID = ? AND project.Status = 'Implementation'";
 
             statement = connection.prepareStatement(query);
             statement.setInt(1, user.getID());
@@ -134,7 +134,7 @@ public class ContractorDAO {
         try {
             myFactory = ConnectionFactory.getInstance();
             connection = myFactory.getConnection();
-            String query = "select * from project where Contractor_ID = ? AND Status = 'Finished'";
+            String query = "select * from project join phase on project.ID = phase.Project_ID where phase.Contractor_ID = ? AND project.Status = 'Finished'";
 
             statement = connection.prepareStatement(query);
             statement.setInt(1, user.getID());

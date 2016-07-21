@@ -37,8 +37,6 @@ public class Project {
     //BAC PART
     private int responses = 0;
     private int confirmed = 0;
-    private Contractor contractor;
-    private Contractor_User contractorUser;
 
 
     public Project() {
@@ -47,7 +45,7 @@ public class Project {
         this.id = id;
     }
 
-    public Project(String id, String name, String description, String type, String status, String foldername, Employee employee, String datesubmitted, float budget, String category, ArrayList<Location> location, ArrayList<Files> files, ArrayList<Phase> phase, Annotation annotation, ArrayList<PComments> pComments, ArrayList<Project> referredProjects, ArrayList<Feedback> feedback, ArrayList<Project_Inspection> inspection, Contractor contractor, Contractor_User contractorUser) {
+    public Project(String id, String name, String description, String type, String status, String foldername, Employee employee, String datesubmitted, float budget, String category, ArrayList<Location> location, ArrayList<Files> files, ArrayList<Phase> phase, Annotation annotation, ArrayList<PComments> pComments, ArrayList<Project> referredProjects, ArrayList<Feedback> feedback, ArrayList<Project_Inspection> inspection) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -66,32 +64,7 @@ public class Project {
         this.referredProjects = referredProjects;
         this.feedback = feedback;
         this.inspection = inspection;
-        this.contractor = contractor;
-        this.contractorUser = contractorUser;
     }
-
-    public Project(String id, String name, String description, String type, String status, String foldername, Employee employee, String datesubmitted, float budget, String category, ArrayList<Location> location, ArrayList<Files> files, ArrayList<Phase> phase, Annotation annotation, ArrayList<PComments> pComments, ArrayList<Project> referredProjects, ArrayList<Feedback> feedback, ArrayList<Project_Inspection> inspection, Contractor_User contractorUser) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.type = type;
-        this.status = status;
-        this.foldername = foldername;
-        this.employee = employee;
-        this.datesubmitted = datesubmitted;
-        this.budget = budget;
-        this.category = category;
-        this.location = location;
-        this.files = files;
-        this.phase = phase;
-        this.annotation = annotation;
-        this.pComments = pComments;
-        this.referredProjects = referredProjects;
-        this.feedback = feedback;
-        this.inspection = inspection;
-        this.contractorUser = contractorUser;
-    }
-    
     
 
     /**
@@ -362,35 +335,6 @@ public class Project {
     public void setConfirmed(int confirmed) {
         this.confirmed = confirmed;
     }
-
-    /**
-     * @return the contractor
-     */
-    public Contractor getContractor() {
-        return contractor;
-    }
-
-    /**
-     * @param contractor the contractor to set
-     */
-    public void setContractor(Contractor contractor) {
-        this.contractor = contractor;
-    }
-
-    /**
-     * @return the contractorUser
-     */
-    public Contractor_User getContractorUser() {
-        return contractorUser;
-    }
-
-    /**
-     * @param contractorUser the contractorUser to set
-     */
-    public void setContractorUser(Contractor_User contractorUser) {
-        this.contractorUser = contractorUser;
-    }
-
     /**
      * @return the mainTestimonial
      */
