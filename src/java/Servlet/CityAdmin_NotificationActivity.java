@@ -5,11 +5,16 @@
  */
 package Servlet;
 
-import DAO.LoginDAO;
+import DAO.ActivityDAO;
+import DAO.NotificationDAO;
+import Entity.Activity;
 import Entity.Employee;
-import Entity.User;
+import Entity.Notification;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +23,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Lenovo
+ * @author AdrianKyle
  */
-public class Login extends HttpServlet {
+public class CityAdmin_NotificationActivity extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,53 +39,23 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
-        try {
-            LoginDAO loginDAO = new LoginDAO();
+        try (PrintWriter out = response.getWriter()) {
+            ActivityDAO actDAO = new ActivityDAO();
+            NotificationDAO notif = new NotificationDAO();
 
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
+            Employee employee = (Employee) session.getAttribute("user");
+            int id = employee.getUser().getId();
+            ArrayList<Activity> alist = actDAO.getActsPerUser(id);
+            ArrayList<Notification> nlist = notif.getNotifPerUser(id);
 
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setType(loginDAO.getType(username));
-            if (loginDAO.login(user) == true) {
+            request.setAttribute("alist", alist);
+            request.setAttribute("nlist", nlist);
+            request.setAttribute("Success", "Success");
+            ServletContext context = getServletContext();
+            RequestDispatcher dispatch = context.getRequestDispatcher("/CityAdmin_NotificationActivity.jsp");
+            dispatch.forward(request, response);
 
-                if (user.getType().equalsIgnoreCase("Citizen")) {
-                    session.setAttribute("user", loginDAO.getCitizenInfo(username));
-                    response.sendRedirect("Citizen_Home");
-
-                } else if (user.getType().equalsIgnoreCase("GS")) {
-                    session.setAttribute("user", loginDAO.getEmpInfo(username));
-                    response.sendRedirect("GS_Home");
-                } else if (user.getType().equalsIgnoreCase("OCPD")) {
-                    session.setAttribute("user", loginDAO.getEmpInfo(username));
-                    response.sendRedirect("OCPD_Home");
-                } else if (user.getType().equalsIgnoreCase("BAC")) {
-                    session.setAttribute("user", loginDAO.getEmpInfo(username));
-                    response.sendRedirect("BAC_Home");
-                } else if (user.getType().equalsIgnoreCase("Contractor")) {
-                    session.setAttribute("user", loginDAO.getContInfo(username));
-                    response.sendRedirect("Contractor_Home");
-                } else if (user.getType().equalsIgnoreCase("CityAdmin")) {
-                    session.setAttribute("user", loginDAO.getEmpInfo(username));
-                    response.sendRedirect("CityAdmin_Home");
-                }
-                
-
-//                else if (user.getUser_Type().getDescription().equals("BAC")) {
-//                    response.sendRedirect("BAC_Home");
-//                    session.setAttribute("user", user.getUsername());
-//                    session.setAttribute("position", userType);
-//                }
-            } else if (loginDAO.login(user) == false) {
-                response.sendRedirect("wrong_login.jsp");
-            }
-
-        } finally {
-            out.close();
         }
     }
 

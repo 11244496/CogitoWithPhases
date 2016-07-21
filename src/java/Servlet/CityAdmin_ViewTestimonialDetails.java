@@ -5,11 +5,16 @@
  */
 package Servlet;
 
-import DAO.LoginDAO;
-import Entity.Employee;
-import Entity.User;
+import DAO.CitizenDAO;
+import DAO.GSDAO;
+import Entity.Files;
+import Entity.Testimonial;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +23,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Lenovo
+ * @author RoAnn
  */
-public class Login extends HttpServlet {
+public class CityAdmin_ViewTestimonialDetails extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,53 +39,34 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
-        try {
-            LoginDAO loginDAO = new LoginDAO();
+        try (PrintWriter out = response.getWriter()) {
 
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
+            int id = Integer.parseInt(request.getParameter("testId"));
 
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setType(loginDAO.getType(username));
-            if (loginDAO.login(user) == true) {
+            GSDAO gs = new GSDAO();
+            CitizenDAO ctdao = new CitizenDAO();
 
-                if (user.getType().equalsIgnoreCase("Citizen")) {
-                    session.setAttribute("user", loginDAO.getCitizenInfo(username));
-                    response.sendRedirect("Citizen_Home");
+            Testimonial t = gs.getTestimonial(id);
 
-                } else if (user.getType().equalsIgnoreCase("GS")) {
-                    session.setAttribute("user", loginDAO.getEmpInfo(username));
-                    response.sendRedirect("GS_Home");
-                } else if (user.getType().equalsIgnoreCase("OCPD")) {
-                    session.setAttribute("user", loginDAO.getEmpInfo(username));
-                    response.sendRedirect("OCPD_Home");
-                } else if (user.getType().equalsIgnoreCase("BAC")) {
-                    session.setAttribute("user", loginDAO.getEmpInfo(username));
-                    response.sendRedirect("BAC_Home");
-                } else if (user.getType().equalsIgnoreCase("Contractor")) {
-                    session.setAttribute("user", loginDAO.getContInfo(username));
-                    response.sendRedirect("Contractor_Home");
-                } else if (user.getType().equalsIgnoreCase("CityAdmin")) {
-                    session.setAttribute("user", loginDAO.getEmpInfo(username));
-                    response.sendRedirect("CityAdmin_Home");
-                }
-                
+            ArrayList<Files> i = ctdao.getFiles(id, t, "Image");
+            ArrayList<Files> v = ctdao.getFiles(id, t, "Video");
+            ArrayList<Files> d = ctdao.getFiles(id, t, "Document");
 
-//                else if (user.getUser_Type().getDescription().equals("BAC")) {
-//                    response.sendRedirect("BAC_Home");
-//                    session.setAttribute("user", user.getUsername());
-//                    session.setAttribute("position", userType);
-//                }
-            } else if (loginDAO.login(user) == false) {
-                response.sendRedirect("wrong_login.jsp");
-            }
+            int supporter = ctdao.getnumberofsubscribers(t);
 
-        } finally {
-            out.close();
+            String location = new Gson().toJson(t.getTlocation());
+            session.setAttribute("location", location);
+
+            session.setAttribute("openTestimonial", t);
+            session.setAttribute("openImage", i);
+            session.setAttribute("openVideo", v);
+            session.setAttribute("openDocument", d);
+            ServletContext context = getServletContext();
+            RequestDispatcher dispatch;
+            dispatch = context.getRequestDispatcher("/CityAdmin_ViewCitizenTestimonial.jsp");
+            dispatch.forward(request, response);
+
         }
     }
 

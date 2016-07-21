@@ -5,11 +5,15 @@
  */
 package Servlet;
 
-import DAO.LoginDAO;
-import Entity.Employee;
-import Entity.User;
+import DAO.CitizenDAO;
+import DAO.CityAdminDAO;
+import DAO.GSDAO;
+import Entity.Testimonial;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +22,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Lenovo
+ * @author AdrianKyle
  */
-public class Login extends HttpServlet {
+public class CityAdmin_Home extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,47 +41,23 @@ public class Login extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         try {
-            LoginDAO loginDAO = new LoginDAO();
-
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setType(loginDAO.getType(username));
-            if (loginDAO.login(user) == true) {
-
-                if (user.getType().equalsIgnoreCase("Citizen")) {
-                    session.setAttribute("user", loginDAO.getCitizenInfo(username));
-                    response.sendRedirect("Citizen_Home");
-
-                } else if (user.getType().equalsIgnoreCase("GS")) {
-                    session.setAttribute("user", loginDAO.getEmpInfo(username));
-                    response.sendRedirect("GS_Home");
-                } else if (user.getType().equalsIgnoreCase("OCPD")) {
-                    session.setAttribute("user", loginDAO.getEmpInfo(username));
-                    response.sendRedirect("OCPD_Home");
-                } else if (user.getType().equalsIgnoreCase("BAC")) {
-                    session.setAttribute("user", loginDAO.getEmpInfo(username));
-                    response.sendRedirect("BAC_Home");
-                } else if (user.getType().equalsIgnoreCase("Contractor")) {
-                    session.setAttribute("user", loginDAO.getContInfo(username));
-                    response.sendRedirect("Contractor_Home");
-                } else if (user.getType().equalsIgnoreCase("CityAdmin")) {
-                    session.setAttribute("user", loginDAO.getEmpInfo(username));
-                    response.sendRedirect("CityAdmin_Home");
-                }
-                
-
-//                else if (user.getUser_Type().getDescription().equals("BAC")) {
-//                    response.sendRedirect("BAC_Home");
-//                    session.setAttribute("user", user.getUsername());
-//                    session.setAttribute("position", userType);
-//                }
-            } else if (loginDAO.login(user) == false) {
-                response.sendRedirect("wrong_login.jsp");
+            GSDAO gs = new GSDAO();
+            CitizenDAO c = new CitizenDAO();
+            CityAdminDAO caDAO = new CityAdminDAO();
+            
+            //Get All Testimonials
+            ArrayList<Testimonial> allPendingTestimonials = caDAO.getAllTestimonialsforApproval();
+            for (int x = 0; x < allPendingTestimonials.size(); x++) {
+                allPendingTestimonials.get(x).setFiles(c.getFilesWithStatus(allPendingTestimonials.get(x).getId(),allPendingTestimonials.get(x), "Approved"));
             }
+
+            //Request set attributes testimonials
+            request.setAttribute("allPendingTestimonials", allPendingTestimonials);
+
+            ServletContext context = getServletContext();
+
+            RequestDispatcher dispatch = context.getRequestDispatcher("/CityAdmin_Home.jsp");
+            dispatch.forward(request, response);
 
         } finally {
             out.close();
