@@ -780,14 +780,10 @@ public class GSDAO {
             while (result.next()) {
                 Schedule s = new Schedule();
                 s.setId(result.getInt("ID"));
-                s.setEvent(result.getString("Event"));
                 s.setStartdate(result.getString("StartDate"));
                 s.setEnddate(result.getString("EndDate"));
                 s.setStatus(result.getString("Status"));
-                s.setStage(result.getString("Stage"));
-                s.setDept(result.getString("Department"));
-                s.setTime(result.getString("Time"));
-                s.setProjectID(result.getString("Project_ID"));
+                 s.setTime(result.getString("Time"));
                 s.setRemarks(result.getString("Remarks"));
                 meetingList.add(s);
             }
@@ -813,7 +809,6 @@ public class GSDAO {
             result = statement.executeQuery();
             while (result.next()) {
                 t = new Task();
-                t.setDescription(result.getString("Description"));
                 tList.add(t);
             }
             connection.close();

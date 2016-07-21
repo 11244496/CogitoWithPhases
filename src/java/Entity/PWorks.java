@@ -16,7 +16,7 @@ public class PWorks {
     private int id;
     private String name;
     private ArrayList<Component> components;
-    private Project project;
+    private Phase phase;
     
     public PWorks() {
     }
@@ -26,11 +26,11 @@ public class PWorks {
         this.name = name;
     }
 
-    public PWorks(int id, String name, ArrayList<Component> components, Project project) {
+    public PWorks(int id, String name, ArrayList<Component> components, Phase phase) {
         this.id = id;
         this.name = name;
         this.components = components;
-        this.project = project;
+        this.phase = phase;
     }
 
     
@@ -62,15 +62,6 @@ public class PWorks {
         this.name = name;
     }
 
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
-    }
-
-
     /**
      * @return the components
      */
@@ -84,6 +75,16 @@ public class PWorks {
     public void setComponents(ArrayList<Component> components) {
         this.components = components;
     }
+
+    public Phase getPhase() {
+        return phase;
+    }
+
+    public void setPhase(Phase phase) {
+        this.phase = phase;
+    }
+    
+    
     
     
 }

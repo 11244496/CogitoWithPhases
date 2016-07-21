@@ -458,14 +458,6 @@
                                                     <div id="map" style="height: 500px; margin: 0; padding: 0; width: 800px"></div>
                                                 </div>
                                             </div>
-
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Target Implementation Date</label>
-                                                <div class="col-md-3 col-xs-11">
-                                                    <input class="form-control form-control-inline input-medium default-date-picker" name="targetimplementationdate" size="16" type="date" id="targetimplementationdate">
-                                                    <span class="help-block">Select date</span>
-                                                </div>
-                                            </div>
                                         </fieldset>
 
                                         <fieldset title="Program" class="step" id="default-step-3" >
