@@ -4,11 +4,8 @@
  * and open the template in the editor.
  */
 package Servlet.AjaxServlet;
-
-import Entity.DataProvider;
 import Entity.Phase;
 import Entity.Schedule;
-import Entity.Segment;
 import Entity.Task;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -88,14 +85,6 @@ public class getganttdata extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
              
-
-
-            
-            
-            
-            
-            
-            
         }
     }
 
