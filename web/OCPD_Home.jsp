@@ -221,8 +221,8 @@
                                                                 </td>
                                                                 <td><%//=unconfirmedMeeting.get(x).getRemarks()%></td>
                                                                 <td>
-                                                                    <button id="<%//=unconfirmedMeeting.get(x).getId()%>" onclick="approveMeeting(this)" class="btn btn-sm btn-success">Approve</button>
-                                                                    <button id="<%//=unconfirmedMeeting.get(x).getId()%>" onclick="rescheduleModal(this)" class="btn btn-sm btn-danger">Reschedule</button>
+<!--                                                                    <button id="<%//=unconfirmedMeeting.get(x).getId()%>" onclick="approveMeeting(this)" class="btn btn-sm btn-success">Approve</button>
+                                                                    <button id="<%//=unconfirmedMeeting.get(x).getId()%>" onclick="rescheduleModal(this)" class="btn btn-sm btn-danger">Reschedule</button>-->
                                                                 </td>
                                                             </tr>
                                                             <%//}%>

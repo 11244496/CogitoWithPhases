@@ -51,39 +51,17 @@ public class OCPD_ViewProjectDetails extends HttpServlet {
             
             String id = request.getParameter("projid");
 
-            Project project = oc.getAllProjectDetails(id);
+            Project project = oc.getBasicProjectDetails(id);
             ArrayList<Location> projectLocation = project.getLocation();
             String location = new Gson().toJson(projectLocation);
             session.setAttribute("location", location);
-            session.setAttribute("cost", oc.getCost(project));
-
-            Testimonial mainTesti = gdao.getTestimonial(project.getMainTestimonial().getId());
-            project.setMainTestimonial(mainTesti);
-            
-            //References
-            ArrayList<Testimonial> referencedTList = new ArrayList<Testimonial>();
-            ArrayList<Project> referencedPList = new ArrayList<Project>();
-            
-            for(int x = 0; x<project.getReferredTestimonials().size();x++){
-                Testimonial t = gdao.getTestimonial(project.getReferredTestimonials().get(x).getId());
-                referencedTList.add(t);
-            }
-            project.setReferredTestimonials(referencedTList);
-            
-            for(int x = 0; x < project.getReferredProjects().size();x++){
-                Project p = oc.getAllProjectDetails(project.getReferredProjects().get(x).getId());
-                referencedPList.add(p);
-            }
-            project.setReferredProjects(referencedPList);
             
             //Set new arraylist of proposal files
-            ArrayList<Files> projectFiles = project.getFiles();
-            session.setAttribute("pFiles", projectFiles);
             session.setAttribute("project", project);
             ServletContext context = getServletContext();
             RequestDispatcher dispatch;
             if (project.getStatus().equalsIgnoreCase("On-hold")){
-                dispatch = context.getRequestDispatcher("/OCPD_ViewProjectDetailsOnHold.jsp");
+                dispatch = context.getRequestDispatcher("/OCPD_ViewProjectDetailsOnHoldTemp.jsp");
             } else {
                 dispatch = context.getRequestDispatcher("/OCPD_ViewProjectDetails.jsp");
             }

@@ -265,6 +265,8 @@
                                 <div class="panel-body bio-graph-info">
                                     <!--<h1>New Dashboard BS3 </h1>-->
                                     <div class="row">
+                                        <span class="pull-right" style="margin-right: 3%">
+                                            <button class="btn btn-success btn-sm" data-toggle="modal" value="Project Details" type="button" id="detailsB"><b>+</b> Show Comment</button>                                        </span>
                                         <div class="col-lg-5" >
                                             <section class="panel">
                                                 <div class="panel-body">
@@ -336,9 +338,14 @@
                                             <strong>Program Works</strong>
                                         </div>
 
-                                        <section class="panel">
-                                            <div class="panel-body">
-                                                <table class="table" style="width:100%; text-align: center">
+ <section class="panel">
+                                            <span class="pull-right" style="margin-right: 3%">
+                                                <br>
+                                                <button class="btn btn-success" data-toggle="modal" type="button" value="Materials" id="materialsB"><b>+</b> Show Comment</button>
+                                                <br>
+                                            </span>
+                                            <br>
+                                            <div class="panel-body">                                                <table class="table" style="width:100%; text-align: center">
 
                                                     <tr>
                                                         <th colspan="6">NAME</th>
@@ -391,7 +398,13 @@
                                     <strong>Project Main Testimonial</strong>
                                 </div>
                                 <div class="panel-body bio-graph-info" style="height: 250px;">
+                                    <span class="pull-right" style="margin-right: 3%">
+                                        <button class="btn btn-success" data-toggle="modal" type="button" value="MainTest" id="mainTestB"><b>+</b> Show Comment</button>                                        
+                                        <br>
+                                        <br>
+                                    </span>
                                     <div class="DocumentList2">
+
                                         <div class="row2">
                                         </div>
                                     </div>
@@ -405,6 +418,12 @@
                                 </div>
                                 <div class="panel-body bio-graph-info" style="height: 250px;">
                                     <div class="DocumentList2">
+                                        <span class="pull-right" style="margin-right: 3%">
+                                            <button class="btn btn-success" data-toggle="modal" type="button" value="ProjectRef" id="projectRefB"><b>+</b> Show Comment</button>
+                                            <br>
+                                            <br>
+                                        </span>
+
                                         <div class="row2">
                                             <div class="col-lg-3 DocumentItem2">
                                             </div>
@@ -420,6 +439,12 @@
                                 </div>
                                 <div class="panel-body bio-graph-info" style="height: 250px;">
                                     <div class="DocumentList2">
+                                        <span class="pull-right" style="margin-right: 3%">
+                                            <button class="btn btn-success" data-toggle="modal" type="button" value="Files" id="filesB"><b>+</b> Show Comment</button>
+                                            <br>
+                                            <br>
+                                        </span>
+
                                         <div class="row2">
                                         </div>
                                     </div>
@@ -474,6 +499,33 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" id="closeModalB" data-dismiss="modal">Close</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade full-width-modal-right" id="addComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content-wrap">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                                <h4 class="modal-title" id="comHead">Title</h4>
+                            </div>
+                            <div class="modal-body">
+                                <label class="panel-heading">Comments:</label>
+                                <textarea rows="10" style="background: white; border:0px;" readonly class="wysihtml5 form-control" id="detailsTA" name="detailsTA"><%//=p.getAnnotations().getDescription()%></textarea>
+                                <textarea rows="10" style="background: white; border:0px;" readonly class="wysihtml5 form-control" id="materialsTA" name="materialsTA"><%//=p.getAnnotations().getMaterials()%></textarea>
+                                <textarea rows="10" style="background: white; border:0px;" readonly class="wysihtml5 form-control" id="mainTestTA" name="mainTestTA"><%//=p.getAnnotations().getSchedule()%></textarea>
+                                <textarea rows="10" style="background: white; border:0px;" readonly class="wysihtml5 form-control" id="projectRefTA" name="projectRefTA"><%//=p.getAnnotations().getUpload()%></textarea>
+                                <textarea rows="10" style="background: white; border:0px;" readonly class="wysihtml5 form-control" id="filesTA" name="filesTA"><%//=p.getAnnotations().getUpload()%></textarea>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -599,9 +651,101 @@
             }
 
         </script>
-    </script>
+        <script>
+            var map;
+    var markers = <%=session.getAttribute("location")%>;
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 14.45, lng: 120.98},
+                    zoom: 14
+                });
 
+                markers.forEach(function (coor) {
+                    var geocoder = new google.maps.Geocoder;
+                    var latLng = new google.maps.LatLng(coor.longs, coor.lats);
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        map: map
+                    });
 
-</body>
+                    var infowindow = new google.maps.InfoWindow;
+
+                    marker.addListener('click', function () {
+                        geocodeLatLng(geocoder, map, infowindow, latLng);
+                    });
+                });
+
+            }
+            function geocodeLatLng(geocoder, map, infowindow, latLng) {
+                var latlng = latLng;
+                geocoder.geocode({'location': latlng}, function (results, status) {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        if (results[0]) {
+                            var marker = new google.maps.Marker({
+                                position: latlng,
+                                map: map
+                            });
+                            infowindow.setContent(results[0].formatted_address);
+                            infowindow.open(map, marker);
+                        } else {
+                            window.alert('No results found');
+                        }
+                    } else {
+                        window.alert('Geocoder failed due to: ' + status);
+                    }
+                });
+            }
+
+            $('#detailsB').click(function () {
+                $('#comHead').text("Project Details");
+                $('#detailsTA').show();
+                $('#materialsTA').hide();
+                $('#mainTestTA').hide();
+                $('#projectRefTA').hide();
+                $('#filesTA').hide();
+                $('#addComments').modal();
+            });
+
+            $('#materialsB').click(function () {
+                $('#comHead').text("Materials");
+                $('#detailsTA').hide();
+                $('#materialsTA').show();
+                $('#mainTestTA').hide();
+                $('#projectRefTA').hide();
+                $('#filesTA').hide();
+                $('#addComments').modal();
+            });
+
+            $('#mainTestB').click(function () {
+                $('#comHead').text("Schedule");
+                $('#detailsTA').hide();
+                $('#materialsTA').hide();
+                $('#mainTestTA').show();
+                $('#projectRefTA').hide();
+                $('#filesTA').hide();
+                $('#addComments').modal();
+            });
+            $('#projectRefB').click(function () {
+                $('#comHead').text("Citizen Testimonial");
+                $('#detailsTA').hide();
+                $('#materialsTA').hide();
+                $('#mainTestTA').hide();
+                $('#projectRefTA').show();
+                $('#filesTA').hide();
+                $('#addComments').modal();
+            });
+            $('#filesB').click(function () {
+                $('#comHead').text("Citizen Testimonial");
+                $('#detailsTA').hide();
+                $('#materialsTA').hide();
+                $('#mainTestTA').hide();
+                $('#projectRefTA').hide();
+                $('#filesTA').show();
+                $('#addComments').modal();
+            });
+
+        </script>
+
+    </body>
 
 </html>
