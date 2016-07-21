@@ -309,6 +309,11 @@
         <servlet-name>CityAdmin_NotificationActivity</servlet-name>
         <servlet-class>Servlet.CityAdmin_NotificationActivity</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CityAdmin_ApproveTestimonial</servlet-name>
+        <servlet-class>Servlet.CityAdmin_ApproveTestimonial</servlet-class>
+    </servlet>
+    
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -617,11 +622,16 @@
         <servlet-name>CityAdmin_NotificationActivity</servlet-name>
         <url-pattern>/CityAdmin_NotificationActivity</url-pattern>
     </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>CityAdmin_ApproveTestimonial</servlet-name>
+        <url-pattern>/CityAdmin_ApproveTestimonial</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    &gt;
     
-    </web-app>
+</web-app>

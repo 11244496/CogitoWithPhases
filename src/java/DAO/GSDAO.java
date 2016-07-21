@@ -14,8 +14,6 @@ import Entity.Employee;
 import Entity.Feedback;
 import Entity.Files;
 import Entity.Location;
-import Entity.Material;
-import Entity.Meeting;
 import Entity.PComments;
 import Entity.PWorks;
 import Entity.PlanningDocument;
@@ -23,7 +21,6 @@ import Entity.Project;
 import Entity.Project_Inspection;
 import Entity.Reply;
 import Entity.Schedule;
-import Entity.SubCategory;
 import Entity.Supporter;
 import Entity.TComments;
 import Entity.TLocation;
@@ -85,7 +82,6 @@ public class GSDAO {
 
         ArrayList<TLocation> tlocation = new ArrayList<TLocation>();
         Project mainproject = new Project();
-        ArrayList<Project> referencedproject = new ArrayList<Project>();
         ArrayList<Reply> replies = new ArrayList<Reply>();
         ArrayList<Files> files = new ArrayList<Files>();
         ArrayList<TComments> tcomments = new ArrayList<TComments>();
@@ -151,17 +147,6 @@ public class GSDAO {
                 mainproject.setId(result.getString("ID"));
             }
             t.setMainproject(mainproject);
-
-            String referencedprojectQuery = ("select * from project_has_reference where Testimonial_ID = ?");
-            statement7 = connection.prepareStatement(referencedprojectQuery);
-            statement7.setInt(1, id);
-            result = statement7.executeQuery();
-            while (result.next()) {
-                Project p = new Project();
-                p.setId(result.getString("Project_ID"));
-                referencedproject.add(p);
-            }
-            t.setReferencedproject(referencedproject);
 
             String repliesQuery = ("select * from reply where Testimonial_ID = ?");
             statement3 = connection.prepareStatement(repliesQuery);
@@ -294,9 +279,10 @@ public class GSDAO {
             connection = myFactory.getConnection();
             String testimonialquery = "select * from testimonial \n"
                     + "join citizen on citizen_id = citizen.ID\n"
-                    + "join users on users_id = users.id";
+                    + "join users on users_id = users.id where status != ?";
 
             statement = connection.prepareStatement(testimonialquery);
+            statement.setString(1, "Pending");
             result = statement.executeQuery();
             while (result.next()) {
                 u = new User(result.getInt("users.id"), result.getString("username"));
@@ -331,8 +317,9 @@ public class GSDAO {
         try {
             myFactory = ConnectionFactory.getInstance();
             connection = myFactory.getConnection();
-            String getID = "select * from testimonial join citizen on citizen_id = citizen.id join users on users.id = users_id where testimonial.id not in (select testimonial_id from reply)";
+            String getID = "select * from testimonial join citizen on citizen_id = citizen.id join users on users.id = users_id where testimonial.status != ? and testimonial.id not in (select testimonial_id from reply)";
             statement = connection.prepareStatement(getID);
+            statement.setString(1, "Pending");
             result = statement.executeQuery();
             while (result.next()) {
                 u = new User(result.getInt("users.id"), result.getString("username"));
@@ -370,9 +357,10 @@ public class GSDAO {
             myFactory = ConnectionFactory.getInstance();
             connection = myFactory.getConnection();
 
-            String query = "select distinct(testimonial.id) from testimonial join reply on testimonial_id = testimonial.id";
+            String query = "select distinct(testimonial.id) from testimonial join reply on testimonial_id = testimonial.id where testimonial.status != ?";
 
             statement = connection.prepareStatement(query);
+            statement.setString(1, "Pending");
             result = statement.executeQuery();
 
             while (result.next()) {
@@ -395,9 +383,10 @@ public class GSDAO {
             myFactory = ConnectionFactory.getInstance();
             connection = myFactory.getConnection();
 
-            String query = "select * from project join testimonial on project.Testimonial_ID = testimonial.id";
+            String query = "select * from project join testimonial on project.Testimonial_ID = testimonial.id where testimonial.status != ?";
 
             statement = connection.prepareStatement(query);
+            statement.setString(1, "Pending");
             result = statement.executeQuery();
 
             while (result.next()) {

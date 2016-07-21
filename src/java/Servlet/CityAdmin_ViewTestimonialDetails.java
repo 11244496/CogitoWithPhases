@@ -64,7 +64,7 @@ public class CityAdmin_ViewTestimonialDetails extends HttpServlet {
             session.setAttribute("openDocument", d);
             ServletContext context = getServletContext();
             RequestDispatcher dispatch;
-            dispatch = context.getRequestDispatcher("/CityAdmin_ViewCitizenTestimonial.jsp");
+            dispatch = context.getRequestDispatcher("/CityAdmin_ViewTestimonial.jsp");
             dispatch.forward(request, response);
 
         }
