@@ -384,20 +384,14 @@
                                                         <tr class="gradeX">
                                                             <td class="title">Ro</td>
                                                             <td class="date">Jan 14, 2016</td>
-                                                            <td class="message">Maecenas in tincidunt ante. Vestibulum pellentesque dignissim eros, id pellentesque libero egestas sed. Cras eu augue nunc. Donec dictum justo a metus hendrerit pellentesque. Curabitur finibus dolor sit amet eleifend tempor. Suspendisse dignissim molestie dolor non mollis</td>
+                                                            <td class="message">SAMPLE PROJECT</td>
                                                             <td class="uploader">rochellesisa@yahoo.com.ph</td>
                                                             <td class="buttons center">
                                                                 <p>
                                                                     <button type="button" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> View Details</button>
                                                                 </p>
                                                                 <p>
-                                                                <div class="btn-group dropdown">
-                                                                    <button data-toggle="dropdown" class="btn btn-success btn-sm dropdown-toggle" type="button"><i class="fa fa-plus"></i> Add as... <span class="caret"></span></button>
-                                                                    <ul role="menu" class="dropdown-menu">
-                                                                        <li><a href="#">Main testimonial</a></li>
-                                                                        <li><a href="#">Reference</a></li>
-                                                                    </ul>
-                                                                </div>
+                                                                    <button type="button" class="btn btn-info btn-sm"><i class="fa fa-eye"></i> Add as reference</button>
                                                                 </p>
                                                             </td>
                                                         </tr>
