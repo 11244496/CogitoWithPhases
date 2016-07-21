@@ -78,7 +78,6 @@ $('.viewbutton').click(function () {
 });
 
 var mainTestimonial = [];
-var referencedTestimonial = [];
 var detachedMainRow;
 var tablerow;
 var Testimonialmarkers = [];
@@ -127,37 +126,6 @@ $('.deselectmainbtn').click(function () {
     document.getElementById("location").value = allPosition;
     initMap();
 
-});
-
-//Transfer from Testi List to Referenced Table List via detach
-$(document).on('click', '.selectreferencebtn', function () {
-
-    $("#ReferenceTestimonialList").show();
-
-    var Rtestimonial = {id: $(this).val()};
-    referencedTestimonial.push(Rtestimonial);
-    var Rt = $(this).closest('tr').detach();
-    $("#RTestimonialTableBody").append(Rt);
-    $(this).removeClass('btn btn-warning btn-sm selectreferencebtn').addClass('btn btn-danger btn-sm unselectreferencebtn');
-    $(this).text("Remove");
-});
-
-//Transfer from Referenced Table back to Testi list
-$(document).on('click', '.unselectreferencebtn', function () {
-    for (var x = 0; x < referencedTestimonial.length; x++) {
-        if (referencedTestimonial[x].id == $(this).val()) {
-            referencedTestimonial.splice(x, 1);
-        }
-    }
-
-    if (referencedTestimonial.length == 0) {
-        $("#ReferenceTestimonialList").hide();
-    }
-
-    var detached = $(this).closest('tr').detach();
-    $("#TestimonialTableBody").append(detached);
-    $(this).removeClass('btn btn-danger btn-sm unselectreferencebtn').addClass('btn btn-warning btn-sm selectreferencebtn');
-    $(this).text("Use as reference");
 });
 
 $.fn.searchableTable = function () {

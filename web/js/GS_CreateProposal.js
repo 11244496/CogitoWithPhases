@@ -1,16 +1,5 @@
 var mainTestimonial = [];
-var referencedTestimonial = [];
-
 var tablerow;
-
-
-
-
-
-
-
-
-
 
 
 /////* 

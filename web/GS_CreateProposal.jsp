@@ -234,7 +234,7 @@
                                         </ul>
                                     </div>
 
-                                    <form class="form-horizontal" id="proposalForm" method="post" action="GS_ViewProjectDetails.jsp">
+                                    <form class="form-horizontal" id="proposalForm" method="post" action="GS_SubmitProposal">
 
                                         <fieldset title="Testimonial" class="step" id="default-step-0">
                                             <legend></legend>
@@ -262,7 +262,9 @@
 
 
                                                             <tbody id="TestimonialTableBody">
-                                                                <%for (int x = 0; x < allTestimonials.size(); x++) {%>
+                                                                <%for (int x = 0; x < allTestimonials.size(); x++) {
+                                                                        if (allTestimonials.get(x).getMainproject().getId() == null) {
+                                                                %>
 
                                                                 <tr>
                                                                     <td><%=allTestimonials.get(x).getTitle()%></td>
@@ -271,15 +273,11 @@
                                                                     <td><%=allTestimonials.get(x).getCitizen().getUser().getUsername()%></td>
                                                                     <td>
                                                                         <p> <button id="viewDetails" type="button" class="btn btn-info btn-sm viewbutton" value="<%=allTestimonials.get(x).getId()%>"> View details</button></p>
-
-                                                                        <%if (allTestimonials.get(x).getMainproject().getId() == null) {%>
                                                                         <p> <button type="button" class="btn btn-success btn-sm selectmainbtn" value="<%=allTestimonials.get(x).getId()%>">  Select as main</button> </p>
-                                                                        <%}%>
-
-                                                                        <p> <button type="button" class="btn btn-warning btn-sm selectreferencebtn" value="<%=allTestimonials.get(x).getId()%>"> Use as reference</button> </p>
                                                                     </td>
                                                                 </tr>
-                                                                <%}%>
+                                                                <%}
+                                                                    }%>
                                                             </tbody>
 
 
@@ -329,36 +327,6 @@
                                                 </center>
 
                                                 <br>
-
-                                            </div>
-
-                                            <div class="col-md-12" style="display: none" id="ReferenceTestimonialList">
-                                                <section class="panel">
-                                                    <header class="panel-heading">
-                                                        Referenced testimonials
-                                                    </header>
-                                                    <div id="RTestimonialList">
-                                                        <table id="RTestimonialTable" class="table table-hover" id="mainTest" data-search-field="#TRview-testimonial">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="title">Title</th>
-                                                                    <th class="message">Description/Message</th>
-                                                                    <th class="date">Date Uploaded</th>
-                                                                    <th class="uploader">Uploader</th>
-                                                                    <th class="buttons"></th>
-                                                                </tr>
-                                                            </thead>
-
-
-
-                                                            <tbody id="RTestimonialTableBody">
-
-                                                            </tbody>
-
-
-                                                        </table>
-                                                    </div>
-                                                </section>
 
                                             </div>
 
@@ -618,6 +586,8 @@
 
 
         <!-- js placed at the end of the document so the pages load faster -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAI6e73iIoB6fgzlEmgdJBFYO3DX0OhMLw&callback=initMap"
+        async defer></script>
         <!--        <script src="js/jquery.js"></script>-->
         <script src="js/bootstrap.min.js"></script>
         <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
@@ -652,9 +622,6 @@
         <script src="js/jquery.stepy.js"></script>
         <!--script for this page only-->
         <script src="js/dynamic_table_init.js"></script>
-        <script src="js/GS_CreateProposal.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAI6e73iIoB6fgzlEmgdJBFYO3DX0OhMLw&callback=initMap"
-        async defer></script> 
 
     </body>
 </html>

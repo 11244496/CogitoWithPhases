@@ -314,6 +314,10 @@
         <servlet-class>Servlet.CityAdmin_ApproveTestimonial</servlet-class>
     </servlet>
     
+    <servlet>
+        <servlet-name>getganttdata</servlet-name>
+        <servlet-class>Servlet.AjaxServlet.getganttdata</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -628,10 +632,12 @@
         <url-pattern>/CityAdmin_ApproveTestimonial</url-pattern>
     </servlet-mapping>
     
+    <servlet-mapping>
+        <servlet-name>getganttdata</servlet-name>
+        <url-pattern>/getganttdata</url-pattern>
+    </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
     
-</web-app>
+    </web-app>

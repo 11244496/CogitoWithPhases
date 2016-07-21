@@ -635,7 +635,7 @@ public class CitizenDAO {
             String query = "insert into files (FileName, DateUploaded, Type, Status, testimonial_id, uploader,description) values "
                     + "(?, curdate(),?,?,(select testimonial.ID from testimonial join "
                     + "citizen on citizen_id = citizen.id join users on Users_ID = users.ID where username = ? "
-                    + "and dateuploaded = (select max(testimonial.dateuploaded)),?,?);";
+                    + "and dateuploaded = (select max(testimonial.dateuploaded))),?,?);";
             statement = connection.prepareStatement(query);
             statement.setString(1, f.getFileName());
             statement.setString(2, f.getType());

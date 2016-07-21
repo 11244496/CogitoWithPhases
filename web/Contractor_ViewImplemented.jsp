@@ -116,6 +116,13 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="Contractor_ViewProjectList">
+                            <i class="fa fa-dashboard"></i>
+                            <span>View All Projects</span>
+                        </a>
+                    </li>
+
                     <li class="sub-menu">
                         <a href="javascript:;" >
                             <i class="fa fa-tasks"></i>
@@ -267,6 +274,12 @@
                                                                     <input type="hidden" name="projectID" value="<%=projects.get(a).getId()%>">
                                                                     <button type="submit" class="btn btn-success" style="width: 90%" value="View proposal details"><i class="fa fa-eye"></i>Project details</button>
 
+                                                                </form>
+                                                            </td>
+                                                            <td>
+                                                                <form action="Contractor_ProjectTimeline.jsp">
+                                                                    <input type="hidden" name="projectID3" value="<%=projects.get(a).getId()%>">
+                                                                    <button type="submit" class="btn btn-success" style="width: 90%" value="View proposal details">Gantt Chart</button>
                                                                 </form>
                                                             </td>
                                                             <td>

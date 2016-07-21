@@ -108,7 +108,7 @@
                 <ul class="sidebar-menu" id="nav-accordion">
 
                     <li>
-                        <a href="Contractor_Home" class="active">
+                        <a href="Contractor_ProjectTimeline.jsp" class="active">
                             <i class="fa fa-dashboard"></i>
                             <span>Home</span>
                         </a>

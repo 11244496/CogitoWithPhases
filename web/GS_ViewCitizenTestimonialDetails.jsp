@@ -358,18 +358,6 @@
 
                                     <br>
 
-                                    <h5 class="bold">Projects that referenced this testimonial</h5>
-                                    <%
-                                        if (testimonial.getReferencedproject().size() > 0) {
-                                            for (int a = 0; a < testimonial.getReferencedproject().size(); a++) {
-                                                System.out.println(testimonial.getReferencedproject().get(a).getName());
-                                            }
-                                        } else {
-                                    %>
-                                    No projects referenced this testimonial yet.
-                                    <%}%>
-                                    <br>
-
 
                                 </div>
 
