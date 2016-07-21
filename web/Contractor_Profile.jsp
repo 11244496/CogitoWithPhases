@@ -5,6 +5,8 @@
 --%>
 
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="Entity.Project"%>
 <%@page import="Entity.Contractor_User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%Contractor_User c = (Contractor_User) session.getAttribute("user");%>
@@ -114,9 +116,16 @@
                         </a>
                     </li>
                     <li>
-                        <a href="Contractor_Profile">
+                        <a href="">
                             <i class="fa fa-dashboard"></i>
                             <span>Profile</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="Contractor_ViewProjectList">
+                            <i class="fa fa-dashboard"></i>
+                            <span>View All Projects</span>
                         </a>
                     </li>
 
@@ -161,31 +170,155 @@
                 </ul>
             </div>
         </aside>
-
-
+                                
+                                
+         <%
+         
+         ArrayList<Project> pList = (ArrayList<Project>) request.getAttribute("pList");
+         
+         
+         %>                       
+                                
         <!--main content start-->
         <section id="main-content">
-            <section class="wrapper site-min-height">
+            <section class="wrapper">
                 <!-- page start-->
-                <section class="panel">
-                    <div class="col-lg-8" style="padding-left: 0px; padding-right:0px; width:100%;">
-                        <div class="row">
-                            <div class="col-lg-6" style="width:100%;">
-                                <!--widget start-->
-                                <section class="panel" style="width:100%;">
+                <div class="row">
+                    <aside class="profile-nav col-lg-3">
+                        <section class="panel">
+                            <div class="user-heading round">
+                                <a href="#">
 
-
-                                </section>
-                                <!--widget end-->
-
+                                </a>
+                                <h1><%=c.getContractor().getName()%></h1>
+                                <p></p>
                             </div>
-                        </div>
 
+                            <ul class="nav nav-pills nav-stacked">
+
+                                <li><a href="profile-edit.html"> <i class="fa fa-edit"></i> Edit profile</a></li>
+                            </ul>
+
+                        </section>
+                    </aside>
+                    <aside class="profile-info col-lg-9">
+
+                        <section class="panel">
+                            <div class="bio-graph-heading">
+                                Project history
+                            </div>
+                            <div class="panel-body bio-graph-info">
+
+                                <div class="row">
+
+                                    <div class="panel-body">
+                                        <table class="table table-hover p-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Description</th>
+                                                    <th>Completed</th>
+                                                    <th>Rating</th>
+                                                    <th></th>
+                                                    <th></th>
+
+
+                                                   
+                                                </tr>
+                                            </thead>
+                                            
+
+                                            <tbody>
+                                                
+                                                <%
+                                                
+                                                   for(int x = 0; x < pList.size(); x++){ 
+                                                
+                                                %>
+                                                <tr>
+                                                    <td class="p-name">
+                                                      <%=pList.get(x).getName()%>
+                                                    </td>
+                                                    <td class="p-name">
+                                                       <%=pList.get(x).getDescription()%>
+                                                    </td>
+                                                    <td class="p-name">
+                                                       
+                                                    </td>
+                                                    <td class="p-name">
+                                                       
+                                                    </td>
+                                                    <td>
+                                                        <form action="Contractor_GetEvaluation">
+                                                            <input type="hidden" name="projectID" value="<%=pList.get(x).getId()%>">
+
+                                                            <button type="submit" class="btn btn-success" value="View proposal details">Evaluation</button>
+
+                                                        </form>
+                                                    </td>
+
+                                                    <td>
+                                                        <form action="">
+                                                            <input type="hidden" name="projectID2" value="">
+
+                                                            <button type="submit" class="btn btn-success" value="View proposal details">Project details</button>
+
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <%
+                                                }
+                                                %>
+                                                
+                                            </tbody>
+                                         
+
+
+                                        </table>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+
+
+
+
+
+
+
+
+
+                    </aside>
+
+
+                </div>
+
+
+
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+
+                <br>
+
+                <center>                                          
+                    <div>
+                        <button class="btn btn-default" type="button" onclick="history.go(-1)">Back</button>
                     </div>
-                </section>
+                </center>
+
                 <!-- page end-->
             </section>
-
         </section>
         <!--main content end-->
 

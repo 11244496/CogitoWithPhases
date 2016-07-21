@@ -125,7 +125,12 @@
                             <span>Home</span>
                         </a>
                     </li>
-
+                    <li>
+                        <a href="Contractor_Profile">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
                     <li class="sub-menu">
                         <a href="javascript:;" >
                             <i class="fa fa-tasks"></i>
@@ -618,38 +623,38 @@
 
 
 
-        
+
 
         <script src="js/jquery.js"></script>
         <script>
-             var proj = "<%=projid%>";
-            var cont = "<%=conid%>";
+                                                var proj = "<%=projid%>";
+                                                var cont = "<%=conid%>";
 
-            $(document).ready(function () {
-                $.ajax({
-                    type: 'POST',
-                    url: 'AJAX_Contractor_CheckPage',
-                    dataType: 'json',
-                    cache: false,
-                    data: {contprojID: cont, projID: proj},
-                    success: function (text) {
+                                                $(document).ready(function () {
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: 'AJAX_Contractor_CheckPage',
+                                                        dataType: 'json',
+                                                        cache: false,
+                                                        data: {contprojID: cont, projID: proj},
+                                                        success: function (text) {
 
-                        if (text === "Y") {
+                                                            if (text === "Y") {
 
-                            document.getElementById("respondToInvite").disabled = true;
+                                                                document.getElementById("respondToInvite").disabled = true;
 
-                        }
-                        else {
-                            document.getElementById("respondToInvite").disabled = false;
+                                                            }
+                                                            else {
+                                                                document.getElementById("respondToInvite").disabled = false;
 
-                        }
+                                                            }
 
 
-                    }
-                });
-            });
+                                                        }
+                                                    });
+                                                });
         </script>
-        
+
         <script>
             function checkPage(cont, proj) {
 
@@ -676,7 +681,8 @@
                     }
                 });
 
-            };
+            }
+            ;
 
 
 
@@ -711,7 +717,8 @@
                         $('#testModal').modal();
                     }
                 });
-            };
+            }
+            ;
 
 
             function getProjectFiles(id) {
@@ -739,11 +746,12 @@
                         $('#projectFiles').modal();
                     }
                 });
-            };
+            }
+            ;
         </script>
 
         <script>
-           
+
 
             var map;
             var markers = <%=request.getAttribute("location")%>;

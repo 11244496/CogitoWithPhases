@@ -5,6 +5,9 @@
 --%>
 
 
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="Entity.Feedback"%>
+<%@page import="Entity.Project"%>
 <%@page import="Entity.Contractor_User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%Contractor_User c = (Contractor_User) session.getAttribute("user");%>
@@ -119,6 +122,13 @@
                             <span>Profile</span>
                         </a>
                     </li>
+                    
+                    <li>
+                        <a href="Contractor_ViewProjectList">
+                            <i class="fa fa-dashboard"></i>
+                            <span>View All Projects</span>
+                        </a>
+                    </li>
 
                     <li class="sub-menu">
                         <a href="javascript:;" >
@@ -161,8 +171,13 @@
                 </ul>
             </div>
         </aside>
-
-
+                                <%
+                                    
+                                Project project = (Project) request.getAttribute("project");
+                                Feedback feedbackSummary = (Feedback) request.getAttribute("feedbackSummary");
+                                DecimalFormat df = new DecimalFormat("#.##");    
+                                %>
+                                
         <!--main content start-->
         <section id="main-content">
             <section class="wrapper site-min-height">
@@ -172,10 +187,82 @@
                         <div class="row">
                             <div class="col-lg-6" style="width:100%;">
                                 <!--widget start-->
-                                <section class="panel" style="width:100%;">
+                                <section class="panel">
+                                    <section class="panel-body">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <b> Project Name: </b>   <%=project.getName()%> <br>
+                                            </td>
+                                                
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <b> Project Description: </b>   <%=project.getDescription()%>
+                                            </td>
+                                        </tr>   
+                                        
+                                        <tr>
+                                            <td>
+                                               <b>Quality: </b> 
+                                            </td>
+                                            <td>
+                                               <%=df.format(feedbackSummary.getQualityave() / 5 * 100)+ "%"%> 
+                                            </td>    
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                                <b>Promptness </b>
+                                            </td>
+                                            <td>
+                                              <%=df.format(feedbackSummary.getPromptnessave() / 5 * 100) + "%"%>  
+                                            </td>    
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                              <b>Convenience </b>
+                                            </td>
+                                            <td>
+                                                <%=df.format(feedbackSummary.getConvenienceave() / 5 * 100) + "%"%>
+                                            </td>    
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                               <b>Safety </b>
+                                            </td>
+                                            <td>
+                                               <%=df.format(feedbackSummary.getSafetyave() / 5 * 100) + "%"%>
+                                            </td>    
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                               <b>Details </b> 
+                                            </td>
+                                            <td>
+                                              <%=df.format(feedbackSummary.getDetailsave() / 5 * 100) + "%"%>
+                                            </td>    
+                                        </tr> 
+                                        <tr>
+                                            <td>
+                                               <b>Satisfaction </b> 
+                                            </td>
+                                            <td>
+                                              <%=df.format(feedbackSummary.getSatisfactionave() / 5 * 100) + "%"%>
+                                            </td>    
+                                        </tr> 
+                                    </tbody>    
+                                </table>    
+                                     </section>   
+
+                                </section>   
 
 
-                                </section>
+                                    
+                                    
+                                    
+                                    
+                               
                                 <!--widget end-->
 
                             </div>

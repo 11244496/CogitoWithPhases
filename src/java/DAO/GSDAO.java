@@ -8,6 +8,7 @@ package DAO;
 import DB.ConnectionFactory;
 import Entity.Annotation;
 import Entity.Citizen;
+import Entity.Citizen_Report;
 import Entity.Component;
 import Entity.Contractor_User;
 import Entity.Employee;
@@ -21,6 +22,7 @@ import Entity.PlanningDocument;
 import Entity.Project;
 import Entity.Project_Inspection;
 import Entity.Reply;
+import Entity.Report_File;
 import Entity.Schedule;
 import Entity.Supporter;
 import Entity.TComments;
@@ -715,6 +717,66 @@ public class GSDAO {
         }
         return pList;
     }
+    
+    public ArrayList<Project> getImplementedProjects() {
+        ArrayList<Project> plist = new ArrayList<Project>();
+        try {
+            myFactory = ConnectionFactory.getInstance();
+            connection = myFactory.getConnection();
+            String getID = "select * from project where status = ?";
+            statement = connection.prepareStatement(getID);
+            statement.setString(1, "Implementation");
+            result = statement.executeQuery();
+            while (result.next()) {
+
+                Project p = new Project();
+
+                p.setId(result.getString("ID"));
+                p.setName(result.getString("Name"));
+                p.setDescription(result.getString("Description"));
+                p.setType(result.getString("Type"));
+
+                plist.add(p);
+            }
+
+            statement.close();
+            connection.close();
+            return plist;
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO.GSDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return plist;
+    }
+    
+    public ArrayList<Project> getFinishedProjects() {
+        ArrayList<Project> plist = new ArrayList<Project>();
+        try {
+            myFactory = ConnectionFactory.getInstance();
+            connection = myFactory.getConnection();
+            String getID = "select * from project where status = ?";
+            statement = connection.prepareStatement(getID);
+            statement.setString(1, "Finished");
+            result = statement.executeQuery();
+            while (result.next()) {
+
+                Project p = new Project();
+
+                p.setId(result.getString("ID"));
+                p.setName(result.getString("Name"));
+                p.setDescription(result.getString("Description"));
+                p.setType(result.getString("Type"));
+
+                plist.add(p);
+            }
+
+            statement.close();
+            connection.close();
+            return plist;
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO.GSDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return plist;
+    }
 
     public ArrayList<PWorks> getWorks() {
         Collection<PWorks> wList = new ArrayList<>();
@@ -965,5 +1027,80 @@ public class GSDAO {
             Logger.getLogger(DAO.GSDAO.class.getName()).log(Level.SEVERE, "Error in getting annotations", ex);
         }
         return a;
+    }
+    
+    //=================================ALL CITIZEN REPORT METHODS===================================================
+    public ArrayList<Citizen_Report> getCitizenReports(String projectId) {
+        ArrayList<Citizen_Report> cRepList = new ArrayList<>();
+        Citizen_Report citreport = null;
+        Citizen citizen = null;
+        Project project = null;
+        try {
+            myFactory = ConnectionFactory.getInstance();
+            connection = myFactory.getConnection();
+            String query = "select * from citizen_report join citizen on citizen_ID = citizen.id join address on address_id =  address.ID join barangay on barangay_ID = barangay.ID  where citizen_report.Project_ID = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, projectId);
+            result = statement.executeQuery();
+            while (result.next()) {
+                citizen = new Citizen();
+                citizen.setId(result.getInt("Citizen_ID"));
+                citizen.setFirstName(result.getString("FirstName"));
+                citizen.setMiddleName(result.getString("MiddleName"));
+                citizen.setLastName(result.getString("LastName"));
+
+                project = new Project();
+                project.setId(result.getString("Project_ID"));
+                
+                citreport = new Citizen_Report(result.getInt("ID"), result.getString("Message"), result.getString("FolderName"), result.getString("Date_Uploaded"), citizen, project);
+                cRepList.add(citreport);
+            }
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO.GSDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return cRepList;
+    }
+    
+    public ArrayList<Report_File> getCitizen_ReportFiles(int id) {
+
+        ArrayList<Report_File> reportList = new ArrayList<Report_File>();
+        Report_File report;
+        
+        Citizen_Report creport;
+        Project project;
+        
+        try {
+            myFactory = ConnectionFactory.getInstance();
+            connection = myFactory.getConnection();
+            String query = "select * from citizen_report join report_file on report_file.Citizen_ReportID = citizen_report.ID where citizen_ReportID = ?";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+
+            result = statement.executeQuery();
+
+            while (result.next()) {
+                
+                creport = new Citizen_Report();
+                creport.setId(result.getInt("Citizen_ReportID"));
+                creport.setMessage(result.getString("Message"));
+                creport.setDate(result.getString("citizen_report.Date_Uploaded"));
+                creport.setFoldername(result.getString("FolderName"));
+                
+                project = new Project();
+                project.setId(result.getString("Project_ID"));
+                
+                report = new Report_File(result.getInt("report_file.ID"), result.getString("FileName"), result.getString("report_file.Date_Uploaded"), result.getString("Type"), result.getString("Uploader"), result.getString("Description"), creport, project);
+                
+                
+                reportList.add(report);
+            }
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO.ContractorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return reportList;
     }
 }

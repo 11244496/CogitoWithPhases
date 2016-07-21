@@ -11,12 +11,14 @@ import Entity.Contractor;
 import Entity.Contractor_Has_Project;
 import Entity.Contractor_User;
 import Entity.Eligibility_Document;
+import Entity.Feedback;
 import Entity.InvitationToBid;
 import Entity.Project;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -231,6 +233,66 @@ public class ContractorDAO {
 
         return respondedProjects;
 
+    }
+    
+    public Project getProjectInfo(String id) {
+
+        Project project = null;
+        try {
+            myFactory = ConnectionFactory.getInstance();
+            connection = myFactory.getConnection();
+            String query = "select * from project where ID = ?";
+
+            statement = connection.prepareStatement(query);
+            statement.setString(1, id);
+
+            result = statement.executeQuery();
+
+            while (result.next()) {
+
+                project = new Project();
+                project.setId(result.getString("ID"));
+                project.setName(result.getString("Name"));
+                project.setDescription(result.getString("Description"));
+                project.setType(result.getString("Type"));
+                project.setStatus(result.getString("Status"));
+
+            }
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO.ContractorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return project;
+    }
+    
+    public Feedback getAverage(Project p) {
+        Feedback f = null;
+        DecimalFormat df = new DecimalFormat("#,###.00");
+        try {
+            myFactory = ConnectionFactory.getInstance();
+            connection = myFactory.getConnection();
+            String query = "select project_id, avg(quality) as quality,  avg(promptness) as promptness, avg(convenience) as convenience, avg(safety) as safety,\n"
+                    + "avg(details) as details, avg(details2) as details2, avg(satisfaction) as satisfaction from feedback where project_id = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, p.getId());
+            result = statement.executeQuery();
+            while (result.next()) {
+                f = new Feedback();
+                f.setQualityave(result.getDouble("quality"));
+                f.setPromptnessave(result.getDouble("promptness"));
+                f.setConvenienceave(result.getDouble("convenience"));
+                f.setSafetyave(result.getDouble("safety"));
+                f.setDetailsave((result.getDouble("details") + result.getDouble("details2")) / 2);
+                f.setSatisfactionave(result.getDouble("satisfaction"));
+            }
+
+            connection.close();
+            return f;
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO.ContractorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return f;
     }
 
     //========================================ALL CONTRACTOR HAS PROJECT CODES============================================
@@ -504,6 +566,43 @@ public class ContractorDAO {
         }
 
         return bidnotices;
+    }
+    
+    //=======================================GET PROJECT HISTORY====================================================
+    public ArrayList<Project> getProjectHistoryList(String input) {
+
+        ArrayList<Project> projectlist = new ArrayList<Project>();    
+        Project project = null;
+        
+        try {
+            myFactory = ConnectionFactory.getInstance();
+            connection = myFactory.getConnection();
+            String query = "select * from project where Status = ?";
+
+            statement = connection.prepareStatement(query);
+            statement.setString(1, input);
+
+            result = statement.executeQuery();
+
+            while (result.next()) {
+
+                project = new Project();
+                project.setId(result.getString("ID"));
+                project.setName(result.getString("Name"));
+                project.setDescription(result.getString("Description"));
+                project.setType(result.getString("Type"));
+                project.setStatus(result.getString("Status"));
+                
+                projectlist.add(project);
+                
+
+            }
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO.ContractorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return projectlist;
     }
 
 

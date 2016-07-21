@@ -271,7 +271,7 @@
     <servlet>
         <servlet-name>AJAX_Citizen_SearchTestimonialViaMap</servlet-name>
         <servlet-class>Servlet.AjaxServlet.AJAX_Citizen_SearchTestimonialViaMap</servlet-class>
-    </servlet>    
+    </servlet>
     <servlet>
         <servlet-name>GS_ViewProjectList</servlet-name>
         <servlet-class>Servlet.GS_ViewProjectList</servlet-class>
@@ -296,7 +296,6 @@
         <servlet-name>OCPD_CompileProposals</servlet-name>
         <servlet-class>Servlet.OCPD_CompileProposals</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>CityAdmin_Home</servlet-name>
         <servlet-class>Servlet.CityAdmin_Home</servlet-class>
@@ -313,10 +312,37 @@
         <servlet-name>CityAdmin_ApproveTestimonial</servlet-name>
         <servlet-class>Servlet.CityAdmin_ApproveTestimonial</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>getganttdata</servlet-name>
         <servlet-class>Servlet.AjaxServlet.getganttdata</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Citizen_SubmitReport</servlet-name>
+        <servlet-class>Servlet.Citizen_SubmitReport</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Citizen_ViewSubmitReportForm</servlet-name>
+        <servlet-class>Servlet.Citizen_ViewSubmitReportForm</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Contractor_GetEvaluation</servlet-name>
+        <servlet-class>Servlet.Contractor_GetEvaluation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Contractor_Profile</servlet-name>
+        <servlet-class>Servlet.Contractor_Profile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GS_OpenCitizenReport</servlet-name>
+        <servlet-class>Servlet.GS_OpenCitizenReport</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GS_ViewCitizenReportList</servlet-name>
+        <servlet-class>Servlet.GS_ViewCitizenReportList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GS_ViewImplementedProjects</servlet-name>
+        <servlet-class>Servlet.GS_ViewImplementedProjects</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -589,7 +615,7 @@
     <servlet-mapping>
         <servlet-name>AJAX_Citizen_SearchTestimonialViaMap</servlet-name>
         <url-pattern>/AJAX_Citizen_SearchTestimonialViaMap</url-pattern>
-    </servlet-mapping>    
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GS_ViewProjectList</servlet-name>
         <url-pattern>/GS_ViewProjectList</url-pattern>
@@ -626,18 +652,43 @@
         <servlet-name>CityAdmin_NotificationActivity</servlet-name>
         <url-pattern>/CityAdmin_NotificationActivity</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>CityAdmin_ApproveTestimonial</servlet-name>
         <url-pattern>/CityAdmin_ApproveTestimonial</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>getganttdata</servlet-name>
         <url-pattern>/getganttdata</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Citizen_SubmitReport</servlet-name>
+        <url-pattern>/Citizen_SubmitReport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Citizen_ViewSubmitReportForm</servlet-name>
+        <url-pattern>/Citizen_ViewSubmitReportForm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Contractor_GetEvaluation</servlet-name>
+        <url-pattern>/Contractor_GetEvaluation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Contractor_Profile</servlet-name>
+        <url-pattern>/Contractor_Profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GS_OpenCitizenReport</servlet-name>
+        <url-pattern>/GS_OpenCitizenReport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GS_ViewCitizenReportList</servlet-name>
+        <url-pattern>/GS_ViewCitizenReportList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GS_ViewImplementedProjects</servlet-name>
+        <url-pattern>/GS_ViewImplementedProjects</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
-    
-    </web-app>
+</web-app>

@@ -124,6 +124,12 @@
                             <span>Home</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="Contractor_Profile">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
 
                     <li>
                         <a href="Contractor_ViewProjectList">
@@ -545,13 +551,13 @@
                                     console.log("before delete: " + chartVal[i].segmentList.length);
                                     if (chartVal[i].name === cat) {
                                         chartVal[i].schedules.splice(id, 1);
-                                        
-                                        
+
+
                                     }
                                     if (chartVal[i].schedules.length == 0) {
                                         chartVal.splice(i, 1);
                                     }
-                                    
+
                                     console.log("after delete: " + chartVal[i].schedules.length);
                                     //renderChart(chartVal);
                                 });
@@ -637,22 +643,22 @@
                 $('#submitEntryEdit').on('click', '#delete-' + index, function () {
 
                     var cat = $('#category').val();
-                                var id = getId(this.id);
+                    var id = getId(this.id);
 
-                                $.each(chartVal, function (i) {
-                                    //console.log("before delete: " + chartVal[i].segmentList.length);
-                                    if (chartVal[i].name === cat) {
-                                        chartVal[i].schedules.splice(id, 1);
-                                    }
-                                    if (chartVal[i].schedules.length == 0) {
-                                        chartVal.splice(i, 1);
-                                    }
-                                    //console.log("after delete: " + chartVal[i].segmentList.length);
-                                });
-                                //Removes the div
-                                console.log(chartVal.length);
-                                $(divInd2).remove();
-                                renderChart(chartVal);
+                    $.each(chartVal, function (i) {
+                        //console.log("before delete: " + chartVal[i].segmentList.length);
+                        if (chartVal[i].name === cat) {
+                            chartVal[i].schedules.splice(id, 1);
+                        }
+                        if (chartVal[i].schedules.length == 0) {
+                            chartVal.splice(i, 1);
+                        }
+                        //console.log("after delete: " + chartVal[i].segmentList.length);
+                    });
+                    //Removes the div
+                    console.log(chartVal.length);
+                    $(divInd2).remove();
+                    renderChart(chartVal);
 
 
                 });
@@ -781,7 +787,7 @@
                                 if (formatDate(chartVal[x].schedules[y].startDate).toString() != start.toString() && formatDate(chartVal[x].schedules[y].endDate).toString() != end.toString()) {
 
                                     chartVal[x].segmentList.push(segmentInput);
-                                    
+
 
 
                                 }
@@ -828,7 +834,7 @@
 
                 //Adds event listener to the object.
                 chart.addListener("clickGraphItem", clickItemEvent);
-                
+
 
             }
 
@@ -915,7 +921,8 @@
 
             function getUpdatedChartVal() {
                 return chartVal;
-            };
+            }
+            ;
 
         </script>    
 

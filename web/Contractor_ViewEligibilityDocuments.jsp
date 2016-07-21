@@ -107,6 +107,12 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="Contractor_Profile">
+                            <i class="fa fa-dashboard"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
 
                     <li class="sub-menu">
                         <a href="javascript:;" >
