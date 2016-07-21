@@ -137,7 +137,7 @@ public class OCPDDAO {
                 p.setId(result.getString("project.ID"));
                 p.setName(result.getString("name"));
                 p.setDescription(result.getString("description"));
-                p.setType(result.getString("project.type"));
+                p.setType(result.getString("category"));
                 p.setStatus(result.getString("status"));
                 p.setFoldername(result.getString("FolderName"));
                 p.setDatesubmitted(result.getString("datesubmitted"));

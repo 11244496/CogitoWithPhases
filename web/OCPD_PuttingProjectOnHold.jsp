@@ -15,12 +15,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%Project p = (Project) session.getAttribute("project");%>
-<%float cost = (Float) session.getAttribute("cost");%>
-<%ArrayList<PWorks> pworks = p.getpWorks();%>
-<%ArrayList<Schedule> schedule = p.getSchedule();%>
-<%ArrayList<Files> files = p.getFiles();%>
-<%DecimalFormat df = new DecimalFormat("#,###.00");%>
-<%ArrayList<Files> pfiles = (ArrayList<Files>) session.getAttribute("pFiles");%>
 
 <html>
     <head>
@@ -282,10 +276,6 @@
                                                     </div><br>
                                                     <%if (p.getBudget() != 0) {%>
 
-                                                    <div>
-                                                        <p><span class="bold">Budget</span> :</p>
-                                                        <p>PHP <%=df.format(p.getBudget())%></p>
-                                                    </div><br>
                                                     <%}%>
 
                                                     <br>  
@@ -340,12 +330,10 @@
                                             </span>
                                             <br>
                                             <div class="panel-body">
-                                                <br>
                                                 <table class="table" style="width:100%; text-align: center">
-                                                    <%for (int x = 0; x < pworks.size(); x++) {%>
 
                                                     <tr>
-                                                        <th colspan="6"><%=pworks.get(x).getName()%></th>
+                                                        <th colspan="6">NAME</th>
                                                     </tr>
                                                     <tr>
                                                         <th><center>Name</center></th>
@@ -354,41 +342,32 @@
                                                     <th><center>Unit Price</center></th>
                                                     <th><center>Total</center></th>
                                                     </tr>
-                                                    <%for (int y = 0; y < pworks.get(x).getComponents().size(); y++) {%>
                                                     <tr>
-                                                        <td><%=pworks.get(x).getComponents().get(y).getName()%></td>
-                                                        <td><%=pworks.get(x).getComponents().get(y).getQuantity()%></td>
-                                                        <td><%=pworks.get(x).getComponents().get(y).getUnit().getUnit()%></td>
-                                                        <td><%=pworks.get(x).getComponents().get(y).getUnitPrice()%></td>
-                                                        <td><%=pworks.get(x).getComponents().get(y).getUnitPrice() * pworks.get(x).getComponents().get(y).getQuantity()%></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
                                                     </tr>
 
-
-                                                    <%}%>
-
-                                                    <%}%>
 
                                                 </table>
                                                 <br> 
                                                 <table class="table" style="width:100%; text-align: center">    
                                                     <tr>
                                                         <td colspan="4">Total cost: </td>
-                                                        <td>PHP <%=df.format(cost)%></td>
                                                     </tr>
 
                                                     <tr>
                                                         <td colspan="4">Indirect Cost 17% of Total Cost: </td>
-                                                        <td>PHP <%=df.format(cost * 0.17)%></td>
                                                     </tr>
 
                                                     <tr>
                                                         <td colspan="4">Tax 5% of Total Cost + Indirect Cost: </td>
-                                                        <td>PHP <%=df.format((cost * 0.17) * .05)%></td>
                                                     </tr>
 
                                                     <tr>
                                                         <td colspan="4">Estimated cost: </td>
-                                                        <td>PHP <%=df.format(cost + (cost * 0.17) + ((cost * 0.17) * .05))%></td>
                                                     </tr>
 
                                                 </table>
@@ -411,40 +390,9 @@
                                     </span>
                                     <div class="DocumentList2">
                                         <div class="row2">
-                                            <%String url = null;%>
-                                            <%Testimonial t = p.getMainTestimonial();
-                                                for (Files f : t.getFiles()) {
-                                                    url = t.getFolderName() + "/" + t.getTitle() + "/" + f.getFileName();
-                                                    if (f.getType().equalsIgnoreCase("image")) {%>
-
-                                            <div class="col-lg-3 DocumentItem2">
-                                                <img src="<%=url%>" style="width:100%; height:100%">
-                                                <br/>
-                                                <button type="button" value="<%=f.getId()%>" class="btn btn-info btn-sm" onclick="getTestimonial(<%=f.getId()%>)" style="width:100%; position: absolute; bottom:0;">View Details</button>                                        
-                                            </div>
-
-                                            <%} else if (f.getType().equalsIgnoreCase("video")) {%>
-
-                                            <div class="col-lg-3 DocumentItem2">
-                                                <video style="position: absolute; width: 100%; height: 100%; top:0px; left:0px;">
-                                                    <source src="<%=url%>" type="video/mp4">
-                                                </video>
-                                                <br/>
-                                                <button type="button" class="btn btn-info btn-sm" style="width:100%; position: absolute; bottom:0;" onclick="getTestimonial(<%=f.getId()%>)">View Details</button>                                        
-                                            </div>
-
-                                            <%} else if (f.getType().equalsIgnoreCase("document")) {%>
-                                            <div class="col-lg-3 DocumentItem2">
-                                                <img src="img/docu.png" style="width:50px; height:50px; vertical-align: middle;">
-                                                <br/>
-                                                <button type="button" value="<%=f.getId()%>" class="btn btn-info btn-sm" onclick="getTestimonial(<%=f.getId()%>)" style="width:100%; position: absolute; bottom:0;">View Details</button>                                        
-                                            </div>
-
-                                            <%}
-                                                }
-                                            %>
                                         </div>
                                     </div>
+
                                 </div>
                             </section>                        
 
@@ -461,42 +409,11 @@
                                             <br>
                                         </span>
 
-                                        <div class="row2">
-
-                                            <%String url2 = null;%>
-                                            <%for (Testimonial testi : p.getReferredTestimonials()) {
-                                                    for (Files f : testi.getFiles()) {
-                                                        url2 = testi.getFolderName() + "/" + testi.getTitle() + "/" + f.getFileName();
-                                                        if (f.getType().equalsIgnoreCase("image")) {%>
-
+                                                                                <div class="row2">
                                             <div class="col-lg-3 DocumentItem2">
-                                                <img src="<%=url2%>" style="width:100%; height:100%">
-                                                <br/>
-                                                <button type="button" value="<%=f.getId()%>" class="btn btn-info btn-sm" onclick="getTestimonial(<%=f.getId()%>)" style="width:100%; position: absolute; bottom:0;">View Details</button>                                        
                                             </div>
-
-                                            <%} else if (f.getType().equalsIgnoreCase("video")) {%>
-
-                                            <div class="col-lg-3 DocumentItem2">
-                                                <video style="position: absolute; width: 100%; height: 100%; top:0px; left:0px;">
-                                                    <source src="<%=url2%>" type="video/mp4">
-                                                </video>
-                                                <br/>
-                                                <button type="button" class="btn btn-info btn-sm" style="width:100%; position: absolute; bottom:0;" onclick="getTestimonial(<%=f.getId()%>)">View Details</button>                                        
-                                            </div>
-
-                                            <%} else if (f.getType().equalsIgnoreCase("document")) {%>
-                                            <div class="col-lg-3 DocumentItem2">
-                                                <img src="img/docu.png" style="width:50px; height:50px; vertical-align: middle;">
-                                                <br/>
-                                                <button type="button" value="<%=f.getId()%>" class="btn btn-info btn-sm" onclick="getTestimonial(<%=f.getId()%>)" style="width:100%; position: absolute; bottom:0;">View Details</button>                                        
-                                            </div>
-
-                                            <%}
-
-                                                    }
-                                                }%>
                                         </div>
+
                                     </div>
                                 </div>
                             </section>
@@ -514,40 +431,7 @@
                                             <br>
                                         </span>
 
-                                        <div class="row2">
-                                            <%
-                                                for (Files f : pfiles) {
-
-                                                    url = p.getFoldername() + "/" + p.getId() + "/" + f.getFileName();
-                                                    if (f.getType().equalsIgnoreCase("image")) {%>
-
-                                            <div class="col-lg-3 DocumentItem2">
-                                                <img src="<%=url%>" style="width:100%; height:100%">
-                                                <br/>
-                                                <button type="button" value="<%=f.getId()%>" class="btn btn-info btn-sm" onclick="getProjectFiles(<%=f.getId()%>)" style="width:100%; position: absolute; bottom:0;">View Details</button>                                        
-                                            </div>
-
-                                            <%} else if (f.getType().equalsIgnoreCase("video")) {%>
-
-                                            <div class="col-lg-3 DocumentItem2">
-                                                <video style="position: absolute; width: 100%; height: 100%; top:0px; left:0px;">
-                                                    <source src="<%=url%>" type="video/mp4">
-                                                </video>
-                                                <br/>
-                                                <button type="button" class="btn btn-info btn-sm" style="width:100%; position: absolute; bottom:0;" onclick="getProjectFiles(<%=f.getId()%>)">View Details</button>                                        
-                                            </div>
-
-                                            <%} else if (f.getType().equalsIgnoreCase("document")) {%>
-                                            <div class="col-lg-3 DocumentItem2">
-                                                <img src="img/docu.png" style="width:50px; height:50px; vertical-align: middle;">
-                                                <br/>
-                                                <button type="button" value="<%=f.getId()%>" class="btn btn-info btn-sm" onclick="getProjectFiles(<%=f.getId()%>)" style="width:100%; position: absolute; bottom:0;">View Details</button>                                        
-                                            </div>
-
-                                            <%}
-
-                                                }
-                                            %>
+                                      <div class="row2">
                                         </div>
                                     </div>
                                 </div>
@@ -605,6 +489,7 @@
                 </div>
             </div>
         </section>
+        
         <form id="putProjectOnHold" action="OCPD_PutOnHold" class="form-horizontal">
             <input type="hidden" name="projectid" value="<%=p.getId()%>">
             <div class="modal fade full-width-modal-right" id="addComments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -702,67 +587,8 @@
 
         </form>
 
-
-        <script>
-            function getTestimonial(id) {
-                $.ajax({type: 'POST',
-                    url: 'AJAX_BAC_gettestimonial',
-                    dataType: 'json',
-                    data: {testId: id}, cache: false,
-                    success: function (f) {
-                        $('#fDisplay').empty();
-                        var url = f.testimonial.folderName + "/" + f.testimonial.title + "/" + f.fileName;
-                        if (f.type === "Video") {
-                            $("<div data-p=\"144.50\"><video><source src=\"" + url + "\" type=\"video/mp4\"><source src=" + url + " type=\"video/ogg\"></video></div>").appendTo("#fDisplay");
-
-                        }
-                        else if (f.type === "Image") {
-                            $("<img src=\"" + url + "\" style=\"max-width: 570px; height:400px;\">").appendTo("#fDisplay");
-
-                        }
-
-                        else if (f.type === "Document") {
-                            $("#docH").remove();
-                            $("<header id=\"docH\" class=\"panel-heading\">File: " + "<a class=\"panel-heading\" href=\"" + url + "\">" + f.fileName + "</a> </header>").appendTo("#abcd");
-                        }
-                        $('#testTitle').text("Title: " + f.testimonial.title);
-                        $('#testDate').text("Date Uploaded: " + f.testimonial.dateUploaded);
-                        $('#testLoc').text("Location Details: " + f.testimonial.location + " + " + f.testimonial.locationdetails);
-                        $('#testDesc').text("Description: " + f.testimonial.message);
-                        $('#testModal').modal();
-                    }
-                });
-            }
-
-            function getProjectFiles(id) {
-                $.ajax({
-                    type: 'POST',
-                    url: 'AJAX_BAC_getProjectFiles',
-                    dataType: 'json',
-                    data: {testId: id}, cache: false,
-                    success: function (f) {
-                        $('#pfDisplay').empty();
-                        var url = "<%=p.getFoldername()%>" + "/" +<%=p.getId()%> + "/" + f.fileName;
-                        if (f.type === "Video") {
-                            $("<div data-p=\"144.50\"><video><source src=\"" + url + "\" type=\"video/mp4\"><source src=" + url + " type=\"video/ogg\"></video></div>").appendTo("#pfDisplay");
-
-                        }
-                        else if (f.type === "Image") {
-                            $("<img src=\"" + url + "\" style=\"max-width: 570px; height:400px;\">").appendTo("#pfDisplay");
-
-                        }
-
-                        else if (f.type === "Document") {
-                            $("#docH").remove();
-                            $("<header id=\"docH\" class=\"panel-heading\">File: " + "<a class=\"panel-heading\" href=\"" + url + "\">" + f.fileName + "</a> </header>").appendTo("#pfDisplay");
-                        }
-                        $('#projectFiles').modal();
-                    }
-                });
-            }</script>
-
         <!-- js placed at the end of the document so the pages load faster -->
-        <!--<script src="js/jquery.js"></script>-->
+        <script src="js/jquery.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
         <script src="js/jquery.scrollTo.min.js"></script>
@@ -917,3 +743,6 @@
     </body>
 
 </html>
+
+
+
