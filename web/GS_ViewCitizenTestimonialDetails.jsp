@@ -12,13 +12,7 @@
 
 <%Testimonial testimonial = (Testimonial) session.getAttribute("openTestimonial");%>
 <%Employee e = (Employee) session.getAttribute("user");%>
-<%ArrayList<Reply> rList = testimonial.getReplies();%>
-<%boolean hasNoReply = (Boolean) session.getAttribute("hasNoReply");
-    Reply r = new Reply();
-    if (!hasNoReply) {
-        r = (Reply) session.getAttribute("reply");
-    }
-%>
+
 <%
     ArrayList<Files> image = (ArrayList<Files>) session.getAttribute("openImage");
     ArrayList<Files> video = (ArrayList<Files>) session.getAttribute("openVideo");

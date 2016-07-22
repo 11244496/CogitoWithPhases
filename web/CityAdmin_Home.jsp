@@ -269,9 +269,10 @@
                                                                         <%}%>
 
                                                                     </td>
-                                                                    
+
                                                                     <td>
-                                                                        <a href="CityAdmin_ApproveTestimonial?testId=<%=testID1%>" class="btn btn-success"><i class="fa fa-check"></i> Approve </a>
+                                                                        <a class="btn btn-success btn-sm" data-toggle="modal" href="#gsApproveModal"><i class="fa fa-check"></i> Approve</a>
+                                                                        <a class="btn btn-danger btn-sm" data-toggle="modal" href="#gsRejectModal"><i class="fa fa-times"></i> Reject</a>
                                                                     </td>    
 
 

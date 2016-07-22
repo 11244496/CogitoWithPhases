@@ -165,7 +165,7 @@ public class Citizen_AddInfo extends HttpServlet {
                             f.setStatus("Pending");
                             f.setDescription(videoD);
                             f.setUploader(c.getUser().getUsername());
-
+                            f.setTestimonial(t);
                             citizenDAO.uploadFiles(f, c.getUser().getUsername());
 
                         } //Images
@@ -177,6 +177,7 @@ public class Citizen_AddInfo extends HttpServlet {
                             f.setStatus("Pending");
                             f.setDescription(imageD);
                             f.setUploader(c.getUser().getUsername());
+                            f.setTestimonial(t);
                             citizenDAO.uploadFiles(f, c.getUser().getUsername());
                         } //Documents 
                         else if (extension.equalsIgnoreCase("pdf") || extension.equalsIgnoreCase("docx") || extension.equalsIgnoreCase("doc") || extension.equalsIgnoreCase("pptx") || extension.equalsIgnoreCase("txt") || extension.equalsIgnoreCase("xlsx")) {
@@ -187,6 +188,7 @@ public class Citizen_AddInfo extends HttpServlet {
                             f.setStatus("Pending");
                             f.setDescription(documentD);
                             f.setUploader(c.getUser().getUsername());
+                            f.setTestimonial(t);
                             citizenDAO.uploadFiles(f, c.getUser().getUsername());
                         }
 
